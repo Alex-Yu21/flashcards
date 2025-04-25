@@ -1,4 +1,4 @@
-import 'package:flashcards_app/domain/entities/flashcard.dart';
+import 'package:flashcards/domain/entities/flashcard.dart';
 
 final List<Flashcard> dummyFlashcards = [
   Flashcard(
@@ -7,7 +7,7 @@ final List<Flashcard> dummyFlashcards = [
     audioPath: null,
     hint: 'животное',
     translation: 'собака',
-    quote: 'Il cane corre nel parco.',
+    description: 'Il cane corre nel parco.',
   ),
   Flashcard(
     title: 'gatto',
@@ -15,7 +15,7 @@ final List<Flashcard> dummyFlashcards = [
     audioPath: null,
     hint: 'животное',
     translation: 'кот',
-    quote: 'Il gatto dorme sul divano.',
+    description: 'Il gatto dorme sul divano.',
   ),
   Flashcard(
     title: 'casa',
@@ -23,7 +23,7 @@ final List<Flashcard> dummyFlashcards = [
     audioPath: null,
     hint: 'место, где ты живёшь',
     translation: 'дом',
-    quote: 'La mia casa è grande e luminosa.',
+    description: 'La mia casa è grande e luminosa.',
   ),
   Flashcard(
     title: 'libro',
@@ -31,7 +31,7 @@ final List<Flashcard> dummyFlashcards = [
     audioPath: null,
     hint: 'читаешь это',
     translation: 'книга',
-    quote: 'Sto leggendo un libro interessante.',
+    description: 'Sto leggendo un libro interessante.',
   ),
   Flashcard(
     title: 'amico',
@@ -39,7 +39,7 @@ final List<Flashcard> dummyFlashcards = [
     audioPath: null,
     hint: 'человек, которому доверяешь',
     translation: 'друг',
-    quote: 'Il mio amico vive a Roma.',
+    description: 'Il mio amico vive a Roma.',
   ),
   Flashcard(
     title: 'mela',
@@ -47,7 +47,7 @@ final List<Flashcard> dummyFlashcards = [
     audioPath: null,
     hint: 'фрукт',
     translation: 'яблоко',
-    quote: 'Mangio una mela ogni giorno.',
+    description: 'Mangio una mela ogni giorno.',
   ),
   Flashcard(
     title: 'scuola',
@@ -55,7 +55,7 @@ final List<Flashcard> dummyFlashcards = [
     audioPath: null,
     hint: 'место учёбы',
     translation: 'школа',
-    quote: 'I bambini vanno a scuola ogni mattina.',
+    description: 'I bambini vanno a scuola ogni mattina.',
   ),
   Flashcard(
     title: 'sole',
@@ -63,7 +63,7 @@ final List<Flashcard> dummyFlashcards = [
     audioPath: null,
     hint: 'на небе днём',
     translation: 'солнце',
-    quote: 'Il sole splende alto nel cielo.',
+    description: 'Il sole splende alto nel cielo.',
   ),
   Flashcard(
     title: 'acqua',
@@ -71,7 +71,7 @@ final List<Flashcard> dummyFlashcards = [
     audioPath: null,
     hint: 'пьёшь это',
     translation: 'вода',
-    quote: 'Bevo molta acqua durante il giorno.',
+    description: 'Bevo molta acqua durante il giorno.',
   ),
   Flashcard(
     title: 'tempo',
@@ -79,6 +79,6 @@ final List<Flashcard> dummyFlashcards = [
     audioPath: null,
     hint: 'идёт всегда',
     translation: 'время / погода (по контексту)',
-    quote: 'Non ho molto tempo libero.',
+    description: 'Non ho molto tempo libero.',
   ),
 ];
