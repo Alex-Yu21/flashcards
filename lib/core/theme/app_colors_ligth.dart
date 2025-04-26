@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class AppColorsLight {
   static const ColorScheme mediumContrast = ColorScheme(
+    primaryFixed: Color(0xFF2D2E40),
     brightness: Brightness.light,
     primary: Color(0xff303066),
     surfaceTint: Color(0xff585992),

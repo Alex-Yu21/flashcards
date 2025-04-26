@@ -1,4 +1,5 @@
 import 'package:flashcards/domain/entities/flashcard.dart';
+import 'package:flashcards/presentation/extensions/context_extensions.dart';
 import 'package:flutter/material.dart';
 
 class FlashcardWidget extends StatelessWidget {
@@ -18,13 +19,11 @@ class FlashcardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final sw = MediaQuery.of(context).size.width;
-    final sh = MediaQuery.of(context).size.height;
+    final sw = context.screenWidth;
+    final sh = context.screenHeight;
 
     final hp = sw * 0.05;
     final vp = sh * 0.02;
-    final titleSize = sw * 0.09;
-    final bodySize = sw * 0.045;
     final iconSize = sw * 0.05;
 
     Widget buildFront() => Column(
@@ -35,10 +34,7 @@ class FlashcardWidget extends StatelessWidget {
             Expanded(
               child: Text(
                 _capitalize(flashcard.title),
-                style: TextStyle(
-                  fontSize: titleSize,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: context.headerStyle,
               ),
             ),
             IconButton(
@@ -51,7 +47,10 @@ class FlashcardWidget extends StatelessWidget {
         Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(flashcard.transcription, style: TextStyle(fontSize: bodySize)),
+            Text(
+              flashcard.transcription.toLowerCase(),
+              style: context.captionStyle,
+            ),
             IconButton(
               iconSize: iconSize,
               onPressed: () {},
@@ -60,7 +59,7 @@ class FlashcardWidget extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 12),
-        Text(flashcard.hint, style: TextStyle(fontSize: bodySize)),
+        Text(flashcard.hint.toLowerCase(), style: context.bodyStyle),
       ],
     );
 
@@ -72,10 +71,7 @@ class FlashcardWidget extends StatelessWidget {
             Expanded(
               child: Text(
                 _capitalize(flashcard.translation),
-                style: TextStyle(
-                  fontSize: titleSize,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: context.headerStyle,
               ),
             ),
             IconButton(
@@ -86,12 +82,12 @@ class FlashcardWidget extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 12),
-        Text(flashcard.description, style: TextStyle(fontSize: bodySize)),
+        Text(flashcard.description.toLowerCase(), style: context.bodyStyle),
         const Spacer(),
         TextButton(
           style: TextButton.styleFrom(
             padding: EdgeInsets.zero,
-            textStyle: TextStyle(fontSize: bodySize),
+            textStyle: TextStyle(fontSize: context.captionSize),
           ),
           onPressed: () {},
           child: Row(

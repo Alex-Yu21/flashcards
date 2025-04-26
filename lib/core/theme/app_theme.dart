@@ -1,5 +1,5 @@
-import 'package:flashcards_app/core/theme/app_colors_dark.dart';
-import 'package:flashcards_app/core/theme/app_colors_ligth.dart';
+import 'package:flashcards/core/theme/app_colors_dark.dart';
+import 'package:flashcards/core/theme/app_colors_ligth.dart';
 import 'package:flutter/material.dart';
 
 class AppTheme {

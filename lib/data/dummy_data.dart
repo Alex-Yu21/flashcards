@@ -45,7 +45,7 @@ final List<Flashcard> dummyFlashcards = [
     title: 'mela',
     transcription: '[ˈme.la]',
     audioPath: null,
-    hint: 'фрукт',
+    hint: 'красный фрукт',
     translation: 'яблоко',
     description: 'Mangio una mela ogni giorno.',
   ),
