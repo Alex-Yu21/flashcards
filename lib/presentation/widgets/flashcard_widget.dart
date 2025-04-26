@@ -7,10 +7,14 @@ class FlashcardWidget extends StatelessWidget {
     super.key,
     required this.flashcard,
     this.isTurned = false,
+    this.color,
+    this.textColor,
   });
 
   final Flashcard flashcard;
   final bool isTurned;
+  final Color? color;
+  final Color? textColor;
 
   String _capitalize(String s) {
     if (s.isEmpty) return s;
@@ -21,6 +25,9 @@ class FlashcardWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final sw = context.screenWidth;
     final sh = context.screenHeight;
+    final cardColor = color ?? Theme.of(context).colorScheme.primaryContainer;
+    final txColor =
+        textColor ?? Theme.of(context).colorScheme.onPrimaryContainer;
 
     final hp = sw * 0.05;
     final vp = sh * 0.02;
@@ -34,13 +41,13 @@ class FlashcardWidget extends StatelessWidget {
             Expanded(
               child: Text(
                 _capitalize(flashcard.title),
-                style: context.headerStyle,
+                style: context.headerStyle.copyWith(color: txColor),
               ),
             ),
             IconButton(
               iconSize: iconSize,
               onPressed: () {},
-              icon: const Icon(Icons.edit),
+              icon: Icon(Icons.edit, color: txColor),
             ),
           ],
         ),
@@ -49,17 +56,20 @@ class FlashcardWidget extends StatelessWidget {
           children: [
             Text(
               flashcard.transcription.toLowerCase(),
-              style: context.captionStyle,
+              style: context.captionStyle.copyWith(color: txColor),
             ),
             IconButton(
               iconSize: iconSize,
               onPressed: () {},
-              icon: const Icon(Icons.volume_up),
+              icon: Icon(Icons.volume_up, color: txColor),
             ),
           ],
         ),
         const SizedBox(height: 12),
-        Text(flashcard.hint.toLowerCase(), style: context.bodyStyle),
+        Text(
+          flashcard.hint.toLowerCase(),
+          style: context.bodyStyle.copyWith(color: txColor),
+        ),
       ],
     );
 
@@ -71,29 +81,32 @@ class FlashcardWidget extends StatelessWidget {
             Expanded(
               child: Text(
                 _capitalize(flashcard.translation),
-                style: context.headerStyle,
+                style: context.headerStyle.copyWith(color: txColor),
               ),
             ),
             IconButton(
               iconSize: iconSize,
               onPressed: () {},
-              icon: const Icon(Icons.edit),
+              icon: Icon(Icons.edit, color: txColor),
             ),
           ],
         ),
         const SizedBox(height: 12),
-        Text(flashcard.description.toLowerCase(), style: context.bodyStyle),
+        Text(
+          flashcard.description.toLowerCase(),
+          style: context.bodyStyle.copyWith(color: txColor),
+        ),
         const Spacer(),
         TextButton(
           style: TextButton.styleFrom(
             padding: EdgeInsets.zero,
-            textStyle: TextStyle(fontSize: context.captionSize),
+            textStyle: TextStyle(fontSize: context.captionSize, color: txColor),
           ),
           onPressed: () {},
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Text('Learn more'),
+              Text('Learn more'),
               Icon(Icons.chevron_right, size: iconSize * 0.8),
             ],
           ),
@@ -102,6 +115,7 @@ class FlashcardWidget extends StatelessWidget {
     );
 
     return Card(
+      color: cardColor,
       margin: EdgeInsets.symmetric(horizontal: hp, vertical: vp),
       elevation: 4,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
