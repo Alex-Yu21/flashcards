@@ -1,0 +1,63 @@
+import 'dart:ui';
+
+import 'package:flashcards/data/dummy_data.dart';
+import 'package:flashcards/presentation/extensions/context_extensions.dart';
+import 'package:flashcards/presentation/widgets/flashcard_widget.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_card_swiper/flutter_card_swiper.dart';
+
+class StartLearningCardSwiper extends StatelessWidget {
+  const StartLearningCardSwiper({super.key, required this.w});
+
+  final double w;
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        ImageFiltered(
+          imageFilter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
+          child: CardSwiper(
+            isDisabled: true,
+            numberOfCardsDisplayed: 3,
+            backCardOffset: Offset(30, -20),
+            cardsCount: 3,
+            cardBuilder:
+                (context, index, percentThresholdX, percentThresholdY) =>
+                    FlashcardWidget(flashcard: dummyFlashcards.last),
+            // TODO  isLoop: false, и окно со статистикой сколько помнит сколько нужно повторить с кнопкой ок и переходом на предыдущий экран
+            padding: EdgeInsets.zero,
+          ),
+        ),
+        Center(
+          child: SizedBox(
+            width: w * 0.5,
+            child: ElevatedButton(
+              onPressed: () {},
+              style: ElevatedButton.styleFrom(
+                padding: const EdgeInsets.symmetric(vertical: 12),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(24),
+                ),
+                minimumSize: const Size.fromHeight(0),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Start learning',
+                    textAlign: TextAlign.center,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: context.bodyStyle,
+                  ),
+                  const Icon(Icons.play_arrow, size: 28),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
