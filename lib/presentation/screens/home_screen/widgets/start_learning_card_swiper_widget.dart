@@ -6,8 +6,8 @@ import 'package:flashcards/presentation/widgets/flashcard_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 
-class StartLearningCardSwiper extends StatelessWidget {
-  const StartLearningCardSwiper({super.key, required this.w});
+class StartLearningCardSwiperWidget extends StatelessWidget {
+  const StartLearningCardSwiperWidget({super.key, required this.w});
 
   final double w;
 
@@ -25,7 +25,6 @@ class StartLearningCardSwiper extends StatelessWidget {
             cardBuilder:
                 (context, index, percentThresholdX, percentThresholdY) =>
                     FlashcardWidget(flashcard: dummyFlashcards.last),
-            // TODO  isLoop: false, и окно со статистикой сколько помнит сколько нужно повторить с кнопкой ок и переходом на предыдущий экран
             padding: EdgeInsets.zero,
           ),
         ),

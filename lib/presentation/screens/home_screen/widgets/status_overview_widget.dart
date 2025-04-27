@@ -2,8 +2,8 @@ import 'package:flashcards/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flashcards/presentation/extensions/context_extensions.dart';
 
-class StatusOverview extends StatelessWidget {
-  const StatusOverview({
+class StatusOverviewWidget extends StatelessWidget {
+  const StatusOverviewWidget({
     super.key,
     this.newWords = 0,
     this.learning = 0,
@@ -19,10 +19,7 @@ class StatusOverview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-        color: Theme.of(context).cardColor,
-        borderRadius: BorderRadius.circular(16),
-      ),
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(16)),
       padding: const EdgeInsets.symmetric(vertical: 16),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,

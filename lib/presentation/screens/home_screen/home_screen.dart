@@ -1,3 +1,4 @@
+import 'package:flashcards/core/theme/app_colors.dart';
 import 'package:flashcards/presentation/extensions/context_extensions.dart';
 import 'package:flashcards/presentation/screens/home_screen/widgets/start_learning_card_swiper_widget.dart';
 import 'package:flashcards/presentation/screens/home_screen/widgets/progress_bar_widget.dart';
@@ -11,33 +12,77 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final h = context.screenHeight;
     final w = context.screenWidth;
+    final colors = Theme.of(context).colorScheme;
+
     return Scaffold(
-      bottomNavigationBar: const _BottomNavigation(),
+      backgroundColor: colors.surface,
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: colors.onSurfaceVariant,
+        selectedItemColor: AppColors.tertiary40,
+        unselectedItemColor: colors.outlineVariant,
+        currentIndex: 0,
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: ''),
+          BottomNavigationBarItem(icon: Icon(Icons.menu_book), label: ''),
+          BottomNavigationBarItem(icon: Icon(Icons.search), label: ''),
+          BottomNavigationBarItem(icon: Icon(Icons.settings), label: ''),
+        ],
+      ),
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 24),
-              SizedBox(
-                height: h * 0.12,
-                child: _header(height: h, context: context),
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 24),
+                  SizedBox(
+                    height: h * 0.12,
+                    child: _header(height: h, context: context),
+                  ),
+                  const SizedBox(height: 24),
+                  SizedBox(height: h * 0.20, child: ProgressBarWidget()),
+                  const SizedBox(height: 24),
+                ],
               ),
-              const SizedBox(height: 24),
-              SizedBox(height: h * 0.16, child: ProgressBar()),
-              SizedBox(
-                height: h * 0.16,
-                child: StatusOverview(learning: 3, reviewing: 2, mastered: 10),
+            ),
+            Expanded(
+              child: Container(
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: Colors.grey.withOpacity(0.2),
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(32),
+                    topRight: Radius.circular(32),
+                  ),
+                ),
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 20,
+                        vertical: 24,
+                      ),
+                      child: StatusOverviewWidget(
+                        learning: 3,
+                        reviewing: 2,
+                        mastered: 10,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 16),
+                      child: SizedBox(
+                        height: h * 0.3,
+                        width: w * 0.9,
+                        child: StartLearningCardSwiperWidget(w: w),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-              const SizedBox(height: 24),
-              SizedBox(
-                height: h * 0.3,
-                width: w * 0.9,
-                child: StartLearningCardSwiper(w: w),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
@@ -48,27 +93,11 @@ class HomeScreen extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Todays\nflashcards', style: context.headerStyle),
-        CircleAvatar(radius: height * 0.028, backgroundImage: NetworkImage('')),
-      ],
-    );
-  }
-}
-
-class _BottomNavigation extends StatelessWidget {
-  const _BottomNavigation();
-
-  @override
-  Widget build(BuildContext context) {
-    return BottomNavigationBar(
-      selectedItemColor: Theme.of(context).colorScheme.primaryFixed,
-      unselectedItemColor: Theme.of(context).colorScheme.outlineVariant,
-      currentIndex: 0,
-      items: const [
-        BottomNavigationBarItem(icon: Icon(Icons.home), label: ''),
-        BottomNavigationBarItem(icon: Icon(Icons.menu_book), label: ''),
-        BottomNavigationBarItem(icon: Icon(Icons.search), label: ''),
-        BottomNavigationBarItem(icon: Icon(Icons.settings), label: ''),
+        Text('Todays\ndashboard', style: context.headerStyle),
+        CircleAvatar(
+          radius: height * 0.028,
+          backgroundImage: const NetworkImage(''),
+        ),
       ],
     );
   }
