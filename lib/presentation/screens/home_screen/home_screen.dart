@@ -1,9 +1,7 @@
-import 'package:flashcards/data/dummy_data.dart';
 import 'package:flashcards/presentation/extensions/context_extensions.dart';
-import 'package:flashcards/presentation/widgets/flashcard_widget.dart';
-import 'package:flashcards/presentation/widgets/progress_bar.dart';
+import 'package:flashcards/presentation/screens/home_screen/widgets/start_learning_card_swiper.dart';
+import 'package:flashcards/presentation/screens/home_screen/widgets/progress_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -28,17 +26,7 @@ class HomeScreen extends StatelessWidget {
               SizedBox(
                 height: h * 0.3,
                 width: w * 0.9,
-                child: CardSwiper(
-                  isDisabled: true,
-                  numberOfCardsDisplayed: 3,
-                  backCardOffset: Offset(30, -20),
-                  cardsCount: 3,
-                  cardBuilder:
-                      (context, index, percentThresholdX, percentThresholdY) =>
-                          FlashcardWidget(flashcard: dummyFlashcards.first),
-                  // TODO  isLoop: false, и окно со статистикой сколько помнит сколько нужно повторить с кнопкой ок и переходом на предыдущий экран
-                  padding: EdgeInsets.zero,
-                ),
+                child: StartLearningCardSwiper(w: w),
               ),
             ],
           ),
@@ -52,7 +40,7 @@ class HomeScreen extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Current\nflashcards', style: context.headerStyle),
+        Text('Todays\nflashcards', style: context.headerStyle),
         CircleAvatar(radius: height * 0.028, backgroundImage: NetworkImage('')),
       ],
     );
