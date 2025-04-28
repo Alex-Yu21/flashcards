@@ -4,7 +4,6 @@ import 'package:flashcards/presentation/screens/home_screen/widgets/start_learni
 import 'package:flashcards/presentation/screens/home_screen/widgets/progress_bar_widget.dart';
 import 'package:flashcards/presentation/screens/home_screen/widgets/status_overview_widget.dart';
 import 'package:flashcards/presentation/screens/learning_screen.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -18,12 +17,6 @@ class HomeScreen extends StatelessWidget {
     final padS = context.paddingS;
     final padM = context.paddingM;
     final padL = context.paddingL;
-
-    void _openLearningScreen(BuildContext context) {
-      Navigator.of(
-        context,
-      ).push(CupertinoPageRoute(builder: (_) => const LearningScreen()));
-    }
 
     return Scaffold(
       backgroundColor: colors.surface,
@@ -57,7 +50,7 @@ class HomeScreen extends StatelessWidget {
               flex: 24,
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 24),
-                child: ProgressBarWidget(),
+                child: const ProgressBarWidget(),
               ),
             ),
 
@@ -124,5 +117,25 @@ class HomeScreen extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  PageRouteBuilder _bottomUpRoute(Widget page) {
+    return PageRouteBuilder(
+      transitionDuration: const Duration(milliseconds: 350),
+      reverseTransitionDuration: const Duration(milliseconds: 300),
+      pageBuilder: (context, animation, secondaryAnimation) => page,
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        final tween = Tween(
+          begin: const Offset(0, 1),
+          end: Offset.zero,
+        ).chain(CurveTween(curve: Curves.easeOutCubic));
+
+        return SlideTransition(position: animation.drive(tween), child: child);
+      },
+    );
+  }
+
+  void _openLearningScreen(BuildContext context) {
+    Navigator.of(context).push(_bottomUpRoute(const LearningScreen()));
   }
 }
