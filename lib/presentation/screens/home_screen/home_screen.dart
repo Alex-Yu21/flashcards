@@ -3,7 +3,7 @@ import 'package:flashcards/presentation/extensions/context_extensions.dart';
 import 'package:flashcards/presentation/screens/home_screen/widgets/start_learning_card_swiper_widget.dart';
 import 'package:flashcards/presentation/screens/home_screen/widgets/progress_bar_widget.dart';
 import 'package:flashcards/presentation/screens/home_screen/widgets/status_overview_widget.dart';
-import 'package:flashcards/presentation/screens/learning_screen.dart';
+import 'package:flashcards/presentation/screens/learning_screen/learning_screen.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
