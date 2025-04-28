@@ -1,4 +1,3 @@
-import 'package:flashcards/core/theme/app_colors.dart';
 import 'package:flashcards/presentation/extensions/context_extensions.dart';
 import 'package:flashcards/presentation/screens/learning_screen/widgets/action_button_widget.dart';
 import 'package:flashcards/presentation/screens/learning_screen/widgets/progress_lint_widget.dart';
@@ -37,6 +36,11 @@ class _LearningScreenState extends State<LearningScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final h = context.screenHeight;
+    final w = context.screenWidth;
+    final padXS = context.paddingXS;
+    final padM = context.paddingM;
+
     return Scaffold(
       appBar: AppBar(backgroundColor: Colors.grey.withOpacity(0.2)),
       body: Container(
@@ -45,18 +49,16 @@ class _LearningScreenState extends State<LearningScreen> {
         child: Column(
           children: [
             _progressLine(context),
-            const SizedBox(height: 100),
+            SizedBox(height: h * 0.12),
             SizedBox(
-              height: 300,
-              width: double.infinity,
+              height: h * 0.3,
+              width: w * 0.9,
               child: _cardSwiper(context),
             ),
+
             Padding(
-              padding: EdgeInsets.all(context.paddingM),
-              child: SizedBox(
-                height: context.screenHeight * 0.28,
-                child: _buttons(),
-              ),
+              padding: EdgeInsets.symmetric(horizontal: padM, vertical: padXS),
+              child: SizedBox(height: h * 0.28, child: _buttons()),
             ),
           ],
         ),
@@ -108,7 +110,10 @@ class _LearningScreenState extends State<LearningScreen> {
   Padding _progressLine(BuildContext context) {
     return Padding(
       padding: EdgeInsets.all(context.paddingM),
-      child: ProgressLineWidget(learned: 4, total: dummyFlashcards.length),
+      child: ProgressLineWidget(
+        learned: currentIndex,
+        total: dummyFlashcards.length,
+      ),
     );
   }
 }
