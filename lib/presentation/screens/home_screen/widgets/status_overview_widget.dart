@@ -24,10 +24,38 @@ class StatusOverviewWidget extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          _buildStatItem(context, AppColors.tertiary70, 'New Words', newWords),
-          _buildStatItem(context, AppColors.tertiary60, 'Learning', learning),
-          _buildStatItem(context, AppColors.tertiary50, 'Reviewing', reviewing),
-          _buildStatItem(context, AppColors.tertiary40, 'Mastered', mastered),
+          Expanded(
+            child: _buildStatItem(
+              context,
+              AppColors.tertiary70,
+              'New Words',
+              newWords,
+            ),
+          ),
+          Expanded(
+            child: _buildStatItem(
+              context,
+              AppColors.tertiary60,
+              'Learning',
+              learning,
+            ),
+          ),
+          Expanded(
+            child: _buildStatItem(
+              context,
+              AppColors.tertiary50,
+              'Reviewing',
+              reviewing,
+            ),
+          ),
+          Expanded(
+            child: _buildStatItem(
+              context,
+              AppColors.tertiary40,
+              'Mastered',
+              mastered,
+            ),
+          ),
         ],
       ),
     );

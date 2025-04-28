@@ -48,12 +48,14 @@ class StartLearningCardSwiperWidget extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    'Start learning',
-                    textAlign: TextAlign.center,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: context.bodyStyle,
+                  Expanded(
+                    child: Text(
+                      'Start learning',
+                      textAlign: TextAlign.center,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: context.bodyStyle,
+                    ),
                   ),
                   const Icon(Icons.play_arrow, size: 28),
                 ],

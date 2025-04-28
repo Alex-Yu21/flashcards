@@ -24,7 +24,7 @@ void main() {
 
     expect(find.text('Hello'), findsOneWidget);
     expect(find.text('həˈləʊ'), findsOneWidget);
-    expect(find.text('He said hello.'), findsOneWidget);
+    expect(find.text('he said hello.'), findsOneWidget);
 
     expect(find.text('Привет'), findsNothing);
     expect(find.text('greeting'), findsNothing);
@@ -43,6 +43,6 @@ void main() {
     expect(find.text('greeting'), findsOneWidget);
 
     expect(find.text('Hello'), findsNothing);
-    expect(find.text('He said hello.'), findsNothing);
+    expect(find.text('he said hello.'), findsNothing);
   });
 }
