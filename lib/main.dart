@@ -1,6 +1,5 @@
 import 'package:flashcards/core/theme/app_theme.dart';
 import 'package:flashcards/presentation/screens/home_screen/home_screen.dart';
-import 'package:flashcards/presentation/screens/learning_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 

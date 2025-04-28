@@ -3,6 +3,8 @@ import 'package:flashcards/presentation/extensions/context_extensions.dart';
 import 'package:flashcards/presentation/screens/home_screen/widgets/start_learning_card_swiper_widget.dart';
 import 'package:flashcards/presentation/screens/home_screen/widgets/progress_bar_widget.dart';
 import 'package:flashcards/presentation/screens/home_screen/widgets/status_overview_widget.dart';
+import 'package:flashcards/presentation/screens/learning_screen.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -16,6 +18,12 @@ class HomeScreen extends StatelessWidget {
     final padS = context.paddingS;
     final padM = context.paddingM;
     final padL = context.paddingL;
+
+    void _openLearningScreen(BuildContext context) {
+      Navigator.of(
+        context,
+      ).push(CupertinoPageRoute(builder: (_) => const LearningScreen()));
+    }
 
     return Scaffold(
       backgroundColor: colors.surface,
@@ -86,7 +94,12 @@ class HomeScreen extends StatelessWidget {
                       child: SizedBox(
                         height: h * 0.30,
                         width: w * 0.90,
-                        child: StartLearningCardSwiperWidget(w: w),
+                        child: StartLearningCardSwiperWidget(
+                          w: w,
+                          onTap: () {
+                            _openLearningScreen(context);
+                          },
+                        ),
                       ),
                     ),
                   ],

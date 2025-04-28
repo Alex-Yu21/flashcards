@@ -7,9 +7,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 
 class StartLearningCardSwiperWidget extends StatelessWidget {
-  const StartLearningCardSwiperWidget({super.key, required this.w});
+  const StartLearningCardSwiperWidget({
+    super.key,
+    required this.w,
+    required this.onTap,
+  });
 
   final double w;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +37,7 @@ class StartLearningCardSwiperWidget extends StatelessWidget {
           child: SizedBox(
             width: w * 0.5,
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: onTap,
               style: ElevatedButton.styleFrom(
                 padding: const EdgeInsets.symmetric(vertical: 12),
                 shape: RoundedRectangleBorder(
