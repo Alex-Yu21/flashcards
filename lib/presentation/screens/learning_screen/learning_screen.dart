@@ -1,5 +1,7 @@
 import 'package:flashcards/core/theme/app_colors.dart';
 import 'package:flashcards/presentation/extensions/context_extensions.dart';
+import 'package:flashcards/presentation/screens/learning_screen/widgets/action_button_widget.dart';
+import 'package:flashcards/presentation/screens/learning_screen/widgets/progress_lint_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:flashcards/data/dummy_data.dart';
@@ -40,55 +42,20 @@ class _LearningScreenState extends State<LearningScreen> {
       body: Container(
         width: double.infinity,
         decoration: BoxDecoration(color: Colors.grey.withOpacity(0.2)),
-
         child: Column(
           children: [
-            Padding(
-              padding: EdgeInsets.all(context.paddingM),
-              child: WordsProgress(learned: 4, total: dummyFlashcards.length),
-            ),
+            _progressLine(context),
             const SizedBox(height: 100),
             SizedBox(
               height: 300,
               width: double.infinity,
-              child: CardSwiper(
-                cardsCount: dummyFlashcards.length,
-                numberOfCardsDisplayed: 3,
-                backCardOffset: const Offset(0, -30),
-                padding: EdgeInsets.zero,
-                isLoop: false,
-                cardBuilder:
-                    (ctx, index, _, __) =>
-                        FlashcardWidget(flashcard: dummyFlashcards[index]),
-                onSwipe: (int oldIndex, int? newIndex, _) {
-                  if (newIndex != null) setState(() => currentIndex = newIndex);
-                  return true;
-                },
-              ),
+              child: _cardSwiper(context),
             ),
             Padding(
               padding: EdgeInsets.all(context.paddingM),
               child: SizedBox(
                 height: context.screenHeight * 0.28,
-                child: Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        _RoundAction(icon: Icons.close, onTap: _dontKnow),
-                        _RoundAction(icon: Icons.done, onTap: _know),
-                      ],
-                    ),
-                    Positioned(
-                      bottom: 0,
-                      child: _RoundAction(
-                        onTap: _reveal,
-                        icon: Icons.visibility_off_outlined,
-                      ),
-                    ),
-                  ],
-                ),
+                child: _buttons(),
               ),
             ),
           ],
@@ -96,63 +63,52 @@ class _LearningScreenState extends State<LearningScreen> {
       ),
     );
   }
-}
 
-class _RoundAction extends StatelessWidget {
-  final IconData icon;
-  final VoidCallback onTap;
-
-  const _RoundAction({required this.icon, required this.onTap, super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    Color color = Theme.of(context).colorScheme.onPrimaryContainer;
-
-    return Material(
-      shape: const CircleBorder(),
-      color: Theme.of(context).colorScheme.primaryContainer.withOpacity(0.7),
-      elevation: 6,
-      child: InkWell(
-        highlightColor: AppColors.tertiary25,
-        customBorder: const CircleBorder(),
-        onTap: onTap,
-        child: SizedBox(
-          height: 72,
-          width: 72,
-          child: Icon(icon, size: 38, color: color),
-        ),
-      ),
-    );
-  }
-}
-
-class WordsProgress extends StatelessWidget {
-  const WordsProgress({super.key, required this.learned, required this.total});
-
-  final int learned;
-  final int total;
-
-  @override
-  Widget build(BuildContext context) {
-    final double progress = learned / total;
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+  Stack _buttons() {
+    return Stack(
+      alignment: Alignment.center,
       children: [
-        Center(child: Text('$total cards')),
-        const SizedBox(height: 6),
-        ClipRRect(
-          borderRadius: BorderRadius.circular(4),
-          child: LinearProgressIndicator(
-            value: progress,
-            minHeight: 8,
-            backgroundColor: Colors.grey.withOpacity(0.2),
-            valueColor: AlwaysStoppedAnimation(
-              Theme.of(context).colorScheme.primaryContainer.withOpacity(0.7),
-            ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            ActionButtonWidget(icon: Icons.close, onTap: _dontKnow),
+            ActionButtonWidget(icon: Icons.done, onTap: _know),
+          ],
+        ),
+        Positioned(
+          bottom: 0,
+          child: ActionButtonWidget(
+            onTap: _reveal,
+            icon: Icons.visibility_off_outlined,
           ),
         ),
       ],
+    );
+  }
+
+  CardSwiper _cardSwiper(BuildContext context) {
+    return CardSwiper(
+      cardsCount: dummyFlashcards.length,
+      numberOfCardsDisplayed: 3,
+      backCardOffset: const Offset(0, -30),
+      padding: EdgeInsets.zero,
+      isLoop: false,
+      cardBuilder:
+          (ctx, index, _, __) => FlashcardWidget(
+            flashcard: dummyFlashcards[index],
+            color: Theme.of(context).colorScheme.primary,
+          ),
+      onSwipe: (int oldIndex, int? newIndex, _) {
+        if (newIndex != null) setState(() => currentIndex = newIndex);
+        return true;
+      },
+    );
+  }
+
+  Padding _progressLine(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.all(context.paddingM),
+      child: ProgressLineWidget(learned: 4, total: dummyFlashcards.length),
     );
   }
 }
