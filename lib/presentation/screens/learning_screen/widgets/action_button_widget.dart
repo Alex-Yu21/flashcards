@@ -17,7 +17,9 @@ class ActionButtonWidget extends StatelessWidget {
 
     return Material(
       shape: const CircleBorder(),
-      color: Theme.of(context).colorScheme.primaryContainer.withOpacity(0.7),
+      color: Theme.of(
+        context,
+      ).colorScheme.primaryContainer.withAlpha((0.7 * 255).round()),
       elevation: 6,
       child: InkWell(
         highlightColor: AppColors.tertiary40,

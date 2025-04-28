@@ -42,17 +42,21 @@ class _LearningScreenState extends State<LearningScreen> {
     final padM = context.paddingM;
 
     return Scaffold(
-      appBar: AppBar(backgroundColor: Colors.grey.withOpacity(0.2)),
+      appBar: AppBar(
+        backgroundColor: Colors.grey.withAlpha((0.2 * 255).round()),
+      ),
       body: Container(
         width: double.infinity,
-        decoration: BoxDecoration(color: Colors.grey.withOpacity(0.2)),
+        decoration: BoxDecoration(
+          color: Colors.grey.withAlpha((0.2 * 255).round()),
+        ),
         child: Column(
           children: [
             _progressLine(context),
             SizedBox(height: h * 0.12),
             SizedBox(
               height: h * 0.3,
-              width: w * 0.9,
+              width: w * 0.98,
               child: _cardSwiper(context),
             ),
 

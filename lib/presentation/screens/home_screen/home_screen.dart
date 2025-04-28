@@ -14,6 +14,7 @@ class HomeScreen extends StatelessWidget {
     final h = context.screenHeight;
     final w = context.screenWidth;
     final colors = Theme.of(context).colorScheme;
+    final padXS = context.paddingXS;
     final padS = context.paddingS;
     final padM = context.paddingM;
     final padL = context.paddingL;
@@ -39,7 +40,10 @@ class HomeScreen extends StatelessWidget {
             Flexible(
               flex: 18,
               child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: padM),
+                padding: EdgeInsets.symmetric(
+                  horizontal: padM,
+                  vertical: padXS,
+                ),
                 child: _header(height: h, context: context),
               ),
             ),
@@ -61,7 +65,7 @@ class HomeScreen extends StatelessWidget {
               child: Container(
                 width: double.infinity,
                 decoration: BoxDecoration(
-                  color: Colors.grey.withOpacity(0.2),
+                  color: Colors.grey.withAlpha((0.2 * 255).round()),
                   borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(32),
                     topRight: Radius.circular(32),

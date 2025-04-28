@@ -24,7 +24,7 @@ class ProgressLineWidget extends StatelessWidget {
           child: LinearProgressIndicator(
             value: progress,
             minHeight: 8,
-            backgroundColor: Colors.grey.withOpacity(0.2),
+            backgroundColor: Colors.grey.withAlpha((0.2 * 255).round()),
             valueColor: AlwaysStoppedAnimation(
               Theme.of(context).colorScheme.primaryContainer.withOpacity(0.7),
             ),
