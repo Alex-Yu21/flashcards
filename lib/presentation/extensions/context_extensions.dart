@@ -12,4 +12,9 @@ extension ResponsiveExt on BuildContext {
       TextStyle(fontSize: headerSize, fontWeight: FontWeight.w600);
   TextStyle get bodyStyle => TextStyle(fontSize: bodySize);
   TextStyle get captionStyle => TextStyle(fontSize: captionSize);
+
+  double get paddingXS => screenWidth * 0.02;
+  double get paddingS => screenWidth * 0.04;
+  double get paddingM => screenWidth * 0.06;
+  double get paddingL => screenWidth * 0.08;
 }
