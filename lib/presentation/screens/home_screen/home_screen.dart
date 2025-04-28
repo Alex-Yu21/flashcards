@@ -13,6 +13,9 @@ class HomeScreen extends StatelessWidget {
     final h = context.screenHeight;
     final w = context.screenWidth;
     final colors = Theme.of(context).colorScheme;
+    final padS = context.paddingS;
+    final padM = context.paddingM;
+    final padL = context.paddingL;
 
     return Scaffold(
       backgroundColor: colors.surface,
@@ -30,24 +33,30 @@ class HomeScreen extends StatelessWidget {
       ),
       body: SafeArea(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(height: 24),
-                  SizedBox(
-                    height: h * 0.12,
-                    child: _header(height: h, context: context),
-                  ),
-                  const SizedBox(height: 24),
-                  SizedBox(height: h * 0.20, child: ProgressBarWidget()),
-                  const SizedBox(height: 24),
-                ],
+            Flexible(
+              flex: 18,
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: padM),
+                child: _header(height: h, context: context),
               ),
             ),
-            Expanded(
+
+            SizedBox(height: padL),
+
+            Flexible(
+              flex: 24,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                child: ProgressBarWidget(),
+              ),
+            ),
+
+            SizedBox(height: padL),
+
+            Flexible(
+              flex: 64,
               child: Container(
                 width: double.infinity,
                 decoration: BoxDecoration(
@@ -58,11 +67,12 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 20,
-                        vertical: 24,
+                      padding: EdgeInsets.symmetric(
+                        horizontal: padS,
+                        vertical: padM,
                       ),
                       child: StatusOverviewWidget(
                         learning: 3,
@@ -70,11 +80,12 @@ class HomeScreen extends StatelessWidget {
                         mastered: 10,
                       ),
                     ),
+
                     Padding(
-                      padding: const EdgeInsets.only(right: 16),
+                      padding: EdgeInsets.only(right: padM),
                       child: SizedBox(
-                        height: h * 0.3,
-                        width: w * 0.9,
+                        height: h * 0.30,
+                        width: w * 0.90,
                         child: StartLearningCardSwiperWidget(w: w),
                       ),
                     ),
