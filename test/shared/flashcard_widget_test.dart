@@ -1,5 +1,5 @@
-import 'package:flashcards/domain/entities/flashcard.dart';
-import 'package:flashcards/presentation/widgets/flashcard_widget.dart';
+import 'package:flashcards/shared/domain/entities/flashcard.dart';
+import 'package:flashcards/shared/widgets/flashcard_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

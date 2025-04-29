@@ -1,5 +1,5 @@
-import 'package:flashcards/domain/entities/flashcard.dart';
-import 'package:flashcards/presentation/extensions/context_extensions.dart';
+import 'package:flashcards/shared/domain/entities/flashcard.dart';
+import 'package:flashcards/core/extensions/context_extensions.dart';
 import 'package:flutter/material.dart';
 
 class FlashcardWidget extends StatelessWidget {

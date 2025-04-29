@@ -1,10 +1,10 @@
-import 'package:flashcards/presentation/extensions/context_extensions.dart';
-import 'package:flashcards/presentation/screens/learning_screen/widgets/action_button_widget.dart';
-import 'package:flashcards/presentation/screens/learning_screen/widgets/progress_lint_widget.dart';
+import 'package:flashcards/core/extensions/context_extensions.dart';
+import 'package:flashcards/features/learning/presentation/widgets/action_button_widget.dart';
+import 'package:flashcards/features/learning/presentation/widgets/progress_lint_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:flashcards/data/dummy_data.dart';
-import 'package:flashcards/presentation/widgets/flashcard_widget.dart';
+import 'package:flashcards/shared/widgets/flashcard_widget.dart';
 
 class LearningScreen extends StatefulWidget {
   const LearningScreen({super.key});

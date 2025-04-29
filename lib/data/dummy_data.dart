@@ -1,4 +1,4 @@
-import 'package:flashcards/domain/entities/flashcard.dart';
+import 'package:flashcards/shared/domain/entities/flashcard.dart';
 
 final List<Flashcard> dummyFlashcards = [
   Flashcard(
