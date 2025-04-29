@@ -1,7 +1,9 @@
 import 'package:flashcards/core/extensions/context_extensions.dart';
+import 'package:flashcards/features/learning/cubit/flashcard_cubit.dart';
 import 'package:flashcards/features/learning/presentation/widgets/action_button_widget.dart';
 import 'package:flashcards/features/learning/presentation/widgets/progress_lint_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:flashcards/data/dummy_data.dart';
 import 'package:flashcards/shared/widgets/flashcard_widget.dart';
@@ -15,14 +17,27 @@ class LearningScreen extends StatefulWidget {
 
 class _LearningScreenState extends State<LearningScreen> {
   int currentIndex = 0;
+  late final FlashcardCubit _cubit;
+
+  @override
+  void initState() {
+    super.initState();
+    _cubit = FlashcardCubit()..loadFlashcards(dummyFlashcards);
+  }
+
+  @override
+  void dispose() {
+    _cubit.close();
+    super.dispose();
+  }
 
   void _dontKnow() {
-    // TODO: логика «не знаю»
+    _cubit.regressCard(dummyFlashcards[currentIndex]);
     _nextCard();
   }
 
   void _know() {
-    // TODO: логика «знаю»
+    _cubit.promoteCard(dummyFlashcards[currentIndex]);
     _nextCard();
   }
 
@@ -41,30 +56,36 @@ class _LearningScreenState extends State<LearningScreen> {
     final padXS = context.paddingXS;
     final padM = context.paddingM;
 
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.grey.withAlpha((0.2 * 255).round()),
-      ),
-      body: Container(
-        width: double.infinity,
-        decoration: BoxDecoration(
-          color: Colors.grey.withAlpha((0.2 * 255).round()),
+    return BlocProvider.value(
+      value: _cubit,
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.grey.withAlpha((0.2 * 255).round()),
         ),
-        child: Column(
-          children: [
-            _progressLine(context),
-            SizedBox(height: h * 0.12),
-            SizedBox(
-              height: h * 0.3,
-              width: w * 0.98,
-              child: _cardSwiper(context),
-            ),
+        body: Container(
+          width: double.infinity,
+          decoration: BoxDecoration(
+            color: Colors.grey.withAlpha((0.2 * 255).round()),
+          ),
+          child: Column(
+            children: [
+              _progressLine(context),
+              SizedBox(height: h * 0.12),
+              SizedBox(
+                height: h * 0.3,
+                width: w * 0.98,
+                child: _cardSwiper(context),
+              ),
 
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: padM, vertical: padXS),
-              child: SizedBox(height: h * 0.28, child: _buttons()),
-            ),
-          ],
+              Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: padM,
+                  vertical: padXS,
+                ),
+                child: SizedBox(height: h * 0.28, child: _buttons()),
+              ),
+            ],
+          ),
         ),
       ),
     );
