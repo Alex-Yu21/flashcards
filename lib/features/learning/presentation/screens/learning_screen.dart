@@ -18,6 +18,7 @@ class LearningScreen extends StatefulWidget {
 class _LearningScreenState extends State<LearningScreen> {
   int currentIndex = 0;
   late final FlashcardCubit _cubit;
+  final _swiperCtrl = CardSwiperController();
 
   @override
   void initState() {
@@ -31,22 +32,31 @@ class _LearningScreenState extends State<LearningScreen> {
     super.dispose();
   }
 
-  void _dontKnow() {
-    _cubit.regressCard(dummyFlashcards[currentIndex]);
-    _nextCard();
-  }
+  // void _dontKnow() {
+  //   _cubit.regressCard(dummyFlashcards[currentIndex]);
+  //   _nextCard();
+  // }
 
-  void _know() {
-    _cubit.promoteCard(dummyFlashcards[currentIndex]);
-    _nextCard();
-  }
+  // void _know() {
+  //   _cubit.promoteCard(dummyFlashcards[currentIndex]);
+  //   _nextCard();
+  // }
 
   void _reveal() {
     // TODO: показать обратную сторону карточки
   }
 
-  void _nextCard() {
-    setState(() => currentIndex = (currentIndex + 1) % dummyFlashcards.length);
+  // void _nextCard() {
+  //   setState(() => currentIndex = (currentIndex + 1) % dummyFlashcards.length);
+  // }
+
+  void _processAnswer(CardSwiperDirection dir) {
+    final card = dummyFlashcards[currentIndex];
+    if (dir == CardSwiperDirection.left) {
+      _cubit.regressCard(card);
+    } else if (dir == CardSwiperDirection.right) {
+      _cubit.promoteCard(card);
+    }
   }
 
   @override
@@ -98,8 +108,14 @@ class _LearningScreenState extends State<LearningScreen> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            ActionButtonWidget(icon: Icons.close, onTap: _dontKnow),
-            ActionButtonWidget(icon: Icons.done, onTap: _know),
+            ActionButtonWidget(
+              icon: Icons.close,
+              onTap: () => _swiperCtrl.swipe(CardSwiperDirection.left),
+            ),
+            ActionButtonWidget(
+              icon: Icons.done,
+              onTap: () => _swiperCtrl.swipe(CardSwiperDirection.right),
+            ),
           ],
         ),
         Positioned(
@@ -115,8 +131,13 @@ class _LearningScreenState extends State<LearningScreen> {
 
   CardSwiper _cardSwiper(BuildContext context) {
     return CardSwiper(
+      controller: _swiperCtrl,
       cardsCount: dummyFlashcards.length,
       numberOfCardsDisplayed: 3,
+      allowedSwipeDirection: AllowedSwipeDirection.symmetric(
+        horizontal: true,
+        vertical: false,
+      ),
       backCardOffset: const Offset(0, -30),
       padding: EdgeInsets.zero,
       isLoop: false,
@@ -125,8 +146,12 @@ class _LearningScreenState extends State<LearningScreen> {
             flashcard: dummyFlashcards[index],
             color: Theme.of(context).colorScheme.primary,
           ),
-      onSwipe: (int oldIndex, int? newIndex, _) {
-        if (newIndex != null) setState(() => currentIndex = newIndex);
+
+      onSwipe: (oldIndex, newIndex, dir) {
+        _processAnswer(dir);
+        if (newIndex != null) {
+          setState(() => currentIndex = newIndex);
+        }
         return true;
       },
     );
