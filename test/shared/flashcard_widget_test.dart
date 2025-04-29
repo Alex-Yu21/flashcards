@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  const testCard = Flashcard(
+  var testCard = Flashcard(
     title: 'hello',
     transcription: 'həˈləʊ',
     audioPath: null,
@@ -17,9 +17,7 @@ void main() {
     WidgetTester tester,
   ) async {
     await tester.pumpWidget(
-      const MaterialApp(
-        home: FlashcardWidget(flashcard: testCard, isTurned: false),
-      ),
+      MaterialApp(home: FlashcardWidget(flashcard: testCard, isTurned: false)),
     );
 
     expect(find.text('Hello'), findsOneWidget);
@@ -34,9 +32,7 @@ void main() {
     WidgetTester tester,
   ) async {
     await tester.pumpWidget(
-      const MaterialApp(
-        home: FlashcardWidget(flashcard: testCard, isTurned: true),
-      ),
+      MaterialApp(home: FlashcardWidget(flashcard: testCard, isTurned: true)),
     );
 
     expect(find.text('Привет'), findsOneWidget);
