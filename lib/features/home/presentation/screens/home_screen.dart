@@ -1,5 +1,6 @@
 import 'package:flashcards/core/theme/app_colors.dart';
 import 'package:flashcards/core/extensions/context_extensions.dart';
+import 'package:flashcards/data/dummy_data.dart';
 import 'package:flashcards/features/home/presentation/widgets/start_learning_card_swiper_widget.dart';
 import 'package:flashcards/features/home/presentation/widgets/progress_bar_widget.dart';
 import 'package:flashcards/features/home/presentation/widgets/status_overview_widget.dart';
@@ -140,6 +141,8 @@ class HomeScreen extends StatelessWidget {
   }
 
   void _openLearningScreen(BuildContext context) {
-    Navigator.of(context).push(_bottomUpRoute(const LearningScreen()));
+    Navigator.of(
+      context,
+    ).push(_bottomUpRoute(LearningScreen(flashcards: dummyFlashcards)));
   }
 }
