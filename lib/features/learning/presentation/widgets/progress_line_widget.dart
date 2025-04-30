@@ -26,7 +26,9 @@ class ProgressLineWidget extends StatelessWidget {
             minHeight: 8,
             backgroundColor: Colors.grey.withAlpha((0.2 * 255).round()),
             valueColor: AlwaysStoppedAnimation(
-              Theme.of(context).colorScheme.primaryContainer.withOpacity(0.7),
+              Theme.of(
+                context,
+              ).colorScheme.primaryContainer.withAlpha((0.7 * 255).round()),
             ),
           ),
         ),

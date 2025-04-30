@@ -1,12 +1,12 @@
 import 'package:flashcards/core/extensions/context_extensions.dart';
 import 'package:flashcards/features/learning/cubit/flashcard_cubit.dart';
 import 'package:flashcards/features/learning/presentation/widgets/action_button_widget.dart';
-import 'package:flashcards/features/learning/presentation/widgets/progress_lint_widget.dart';
+import 'package:flashcards/features/learning/presentation/widgets/progress_line_widget.dart';
 import 'package:flashcards/shared/domain/entities/flashcard.dart';
+import 'package:flashcards/shared/widgets/flashcard_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
-import 'package:flashcards/shared/widgets/flashcard_widget.dart';
 import 'package:flutter_flip_card/controllers/flip_card_controllers.dart';
 import 'package:flutter_flip_card/flipcard/flip_card.dart';
 import 'package:flutter_flip_card/modal/flip_side.dart';

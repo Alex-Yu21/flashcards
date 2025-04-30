@@ -1,7 +1,7 @@
 import 'dart:ui';
 
-import 'package:flashcards/data/dummy_data.dart';
 import 'package:flashcards/core/extensions/context_extensions.dart';
+import 'package:flashcards/data/dummy_data.dart';
 import 'package:flashcards/shared/widgets/flashcard_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
@@ -25,7 +25,7 @@ class StartLearningCardSwiperWidget extends StatelessWidget {
           child: CardSwiper(
             isDisabled: true,
             numberOfCardsDisplayed: 3,
-            backCardOffset: Offset(30, -20),
+            backCardOffset: const Offset(30, -20),
             cardsCount: 3,
             cardBuilder:
                 (context, index, percentThresholdX, percentThresholdY) =>

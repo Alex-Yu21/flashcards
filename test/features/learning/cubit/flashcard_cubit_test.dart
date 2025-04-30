@@ -1,10 +1,9 @@
 import 'package:bloc_test/bloc_test.dart';
-import 'package:flutter_test/flutter_test.dart';
-
 import 'package:flashcards/features/learning/cubit/flashcard_cubit.dart';
 import 'package:flashcards/features/learning/cubit/flashcard_state.dart';
-import 'package:flashcards/shared/domain/entities/flashcard.dart';
 import 'package:flashcards/shared/domain/entities/card_category.dart';
+import 'package:flashcards/shared/domain/entities/flashcard.dart';
+import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('FlashcardCubit', () {
@@ -31,7 +30,7 @@ void main() {
       expect:
           () => [
             isA<FlashcardLoaded>().having(
-              (s) => (s as FlashcardLoaded).flashcards.first.category,
+              (s) => (s).flashcards.first.category,
               'category',
               CardCategory.defaultCat,
             ),
@@ -61,7 +60,7 @@ void main() {
       expect:
           () => [
             isA<FlashcardLoaded>().having(
-              (s) => (s as FlashcardLoaded).flashcards.first.category,
+              (s) => (s).flashcards.first.category,
               'category',
               CardCategory.learning,
             ),

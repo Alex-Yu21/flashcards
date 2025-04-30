@@ -24,7 +24,7 @@ class ProgressBarWidget extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 4),
-              Text('Mar 0${index + 1}', style: TextStyle(fontSize: 10)),
+              Text('Mar 0${index + 1}', style: const TextStyle(fontSize: 10)),
             ],
           );
         }),

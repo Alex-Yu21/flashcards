@@ -1,7 +1,7 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flashcards/features/learning/cubit/flashcard_state.dart';
 import 'package:flashcards/shared/domain/entities/card_category.dart';
 import 'package:flashcards/shared/domain/entities/flashcard.dart';
-import 'flashcard_state.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class FlashcardCubit extends Cubit<FlashcardState> {
   FlashcardCubit() : super(FlashcardInitial());

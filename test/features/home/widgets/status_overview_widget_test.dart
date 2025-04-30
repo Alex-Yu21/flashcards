@@ -1,6 +1,6 @@
+import 'package:flashcards/features/home/presentation/widgets/status_overview_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flashcards/features/home/presentation/widgets/status_overview_widget.dart';
 
 void main() {
   group('StatusOverviewWidget', () {

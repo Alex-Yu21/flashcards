@@ -1,6 +1,6 @@
+import 'package:flashcards/core/extensions/context_extensions.dart';
 import 'package:flashcards/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flashcards/core/extensions/context_extensions.dart';
 
 class StatusOverviewWidget extends StatelessWidget {
   const StatusOverviewWidget({
