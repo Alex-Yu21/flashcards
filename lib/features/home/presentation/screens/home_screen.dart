@@ -2,6 +2,7 @@ import 'package:flashcards/core/extensions/context_extensions.dart';
 import 'package:flashcards/core/theme/app_colors.dart';
 import 'package:flashcards/features/home/cubit/statistics_cubit.dart';
 import 'package:flashcards/features/home/cubit/statistics_state.dart';
+import 'package:flashcards/features/home/cubit/status_overview_cubit.dart';
 import 'package:flashcards/features/home/presentation/widgets/progress_bar_widget.dart';
 import 'package:flashcards/features/home/presentation/widgets/start_learning_card_swiper_widget.dart';
 import 'package:flashcards/features/home/presentation/widgets/status_overview_widget.dart';
@@ -18,8 +19,11 @@ class HomeScreenRoute extends StatelessWidget {
   Widget build(BuildContext context) {
     final repo = context.read<FlashcardRepository>();
 
-    return BlocProvider(
-      create: (_) => StatisticsCubit(repo)..init(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (_) => StatisticsCubit(repo)..init()),
+        BlocProvider(create: (_) => StatusOverviewCubit()),
+      ],
       child: const HomeScreen(),
     );
   }
@@ -52,7 +56,6 @@ class HomeScreen extends StatelessWidget {
                 child: _header(context, h),
               ),
             ),
-
             SizedBox(height: pL),
 
             const Flexible(
@@ -62,7 +65,6 @@ class HomeScreen extends StatelessWidget {
                 child: ProgressBarWidget(),
               ),
             ),
-
             SizedBox(height: pL),
 
             Flexible(
@@ -120,23 +122,19 @@ class HomeScreen extends StatelessWidget {
         children: [
           Padding(
             padding: EdgeInsets.symmetric(horizontal: pS, vertical: pM),
-            child: BlocBuilder<StatisticsCubit, StatisticsState>(
-              builder: (_, state) {
+            child: BlocListener<StatisticsCubit, StatisticsState>(
+              listenWhen: (prev, curr) => prev != curr,
+              listener: (context, state) {
                 int val(CardCategory c) => state.currentCounts[c] ?? 0;
-                int delta(CardCategory c) =>
-                    val(c) - (state.initialCounts[c] ?? 0);
 
-                return StatusOverviewWidget(
+                context.read<StatusOverviewCubit>().update(
                   newWords: val(CardCategory.newWords),
                   learning: val(CardCategory.learning),
                   reviewing: val(CardCategory.reviewing),
                   mastered: val(CardCategory.mastered),
-                  newWordsDelta: delta(CardCategory.newWords),
-                  learningDelta: delta(CardCategory.learning),
-                  reviewingDelta: delta(CardCategory.reviewing),
-                  masteredDelta: delta(CardCategory.mastered),
                 );
               },
+              child: const StatusOverviewWidget(),
             ),
           ),
 

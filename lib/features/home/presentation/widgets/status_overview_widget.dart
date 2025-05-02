@@ -1,85 +1,77 @@
+import 'dart:async';
+
 import 'package:flashcards/core/extensions/context_extensions.dart';
 import 'package:flashcards/core/theme/app_colors.dart';
+import 'package:flashcards/features/home/cubit/status_overview_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class StatusOverviewWidget extends StatelessWidget {
-  const StatusOverviewWidget({
-    super.key,
-    this.newWords = 0,
-    this.learning = 0,
-    this.reviewing = 0,
-    this.mastered = 0,
-    this.newWordsDelta = 0,
-    this.learningDelta = 0,
-    this.reviewingDelta = 0,
-    this.masteredDelta = 0,
-  });
+  const StatusOverviewWidget({super.key});
 
-  final int newWords;
-  final int learning;
-  final int reviewing;
-  final int mastered;
-  final int newWordsDelta;
-  final int learningDelta;
-  final int reviewingDelta;
-  final int masteredDelta;
+  static const _animDuration = Duration(milliseconds: 800);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(borderRadius: BorderRadius.circular(16)),
-      padding: const EdgeInsets.symmetric(vertical: 16),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          Expanded(
-            child: _buildStatItem(
-              context,
-              AppColors.tertiary70,
-              'New Words',
-              newWords,
-              newWordsDelta,
-            ),
+    return BlocBuilder<StatusOverviewCubit, StatusOverviewState>(
+      builder: (context, state) {
+        return Container(
+          decoration: BoxDecoration(borderRadius: BorderRadius.circular(16)),
+          padding: const EdgeInsets.symmetric(vertical: 16),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Expanded(
+                child: _StatItem(
+                  color: AppColors.tertiary70,
+                  label: 'New Words',
+                  item: state.newWords,
+                ),
+              ),
+              Expanded(
+                child: _StatItem(
+                  color: AppColors.tertiary60,
+                  label: 'Learning',
+                  item: state.learning,
+                ),
+              ),
+              Expanded(
+                child: _StatItem(
+                  color: AppColors.tertiary50,
+                  label: 'Reviewing',
+                  item: state.reviewing,
+                ),
+              ),
+              Expanded(
+                child: _StatItem(
+                  color: AppColors.tertiary40,
+                  label: 'Mastered',
+                  item: state.mastered,
+                ),
+              ),
+            ],
           ),
-          Expanded(
-            child: _buildStatItem(
-              context,
-              AppColors.tertiary60,
-              'Learning',
-              learning,
-              learningDelta,
-            ),
-          ),
-          Expanded(
-            child: _buildStatItem(
-              context,
-              AppColors.tertiary50,
-              'Reviewing',
-              reviewing,
-              reviewingDelta,
-            ),
-          ),
-          Expanded(
-            child: _buildStatItem(
-              context,
-              AppColors.tertiary40,
-              'Mastered',
-              mastered,
-              masteredDelta,
-            ),
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
+}
 
-  Widget _buildStatItem(
-    BuildContext context,
-    Color color,
-    String label,
-    int count,
-    int delta,
-  ) {
+class _StatItem extends StatelessWidget {
+  const _StatItem({
+    required this.color,
+    required this.label,
+    required this.item,
+  });
+
+  final Color color;
+  final String label;
+  final StatusItem item;
+
+  @override
+  Widget build(BuildContext context) {
+    final textStyle = context.bodyStyle.copyWith(fontWeight: FontWeight.w300);
+
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -87,11 +79,109 @@ class StatusOverviewWidget extends StatelessWidget {
         const SizedBox(height: 4),
         Text(label, style: context.captionStyle.copyWith(color: Colors.grey)),
         const SizedBox(height: 8),
-        Text(
-          delta == 0 ? '$count' : '$count $delta',
-          style: context.bodyStyle.copyWith(fontWeight: FontWeight.w300),
-        ),
+
+        item.delta == 0
+            ? TimedCountUp(
+              start: item.from,
+              end: item.to,
+              totalDuration: StatusOverviewWidget._animDuration,
+              style: textStyle,
+            )
+            : Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                TimedCountUp(
+                  start: item.from,
+                  end: item.to,
+                  totalDuration: StatusOverviewWidget._animDuration,
+                  style: textStyle,
+                ),
+                const SizedBox(width: 2),
+                Text(
+                  item.delta > 0 ? '+${item.delta}' : '${item.delta}',
+                  style: context.captionStyle.copyWith(
+                    color:
+                        item.delta > 0
+                            ? const Color.fromARGB(255, 98, 156, 33)
+                            : Colors.grey.shade700,
+                  ),
+                ),
+              ],
+            ),
       ],
+    );
+  }
+}
+
+class TimedCountUp extends StatefulWidget {
+  final int start;
+  final int end;
+  final Duration totalDuration;
+  final TextStyle? style;
+
+  const TimedCountUp({
+    super.key,
+    required this.start,
+    required this.end,
+    this.totalDuration = const Duration(milliseconds: 800),
+    this.style,
+  });
+
+  @override
+  State<TimedCountUp> createState() => _TimedCountUpState();
+}
+
+class _TimedCountUpState extends State<TimedCountUp> {
+  late int _current;
+  Timer? _timer;
+
+  @override
+  void initState() {
+    super.initState();
+    _runCounter();
+  }
+
+  @override
+  void didUpdateWidget(TimedCountUp oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.end != widget.end) _runCounter();
+  }
+
+  void _runCounter() {
+    _timer?.cancel();
+    _current = widget.start;
+
+    final steps = (widget.end - widget.start).abs();
+    if (steps == 0) {
+      setState(() {});
+      return;
+    }
+
+    final stepDuration = widget.totalDuration ~/ steps;
+
+    _timer = Timer.periodic(stepDuration, (t) {
+      if (_current == widget.end) {
+        t.cancel();
+      } else {
+        setState(() {
+          _current += widget.start < widget.end ? 1 : -1;
+        });
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      _current.toString(),
+      style: widget.style ?? Theme.of(context).textTheme.bodyMedium,
     );
   }
 }
