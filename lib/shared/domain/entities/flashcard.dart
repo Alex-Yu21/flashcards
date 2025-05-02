@@ -2,6 +2,7 @@ import 'package:flashcards/shared/domain/entities/card_category.dart';
 
 class Flashcard {
   Flashcard({
+    required this.id,
     required this.title,
     required this.transcription,
     this.audioPath,
@@ -11,6 +12,7 @@ class Flashcard {
     this.category = CardCategory.newWords,
   });
 
+  final String id;
   final String title;
   final String transcription;
   final String? audioPath;

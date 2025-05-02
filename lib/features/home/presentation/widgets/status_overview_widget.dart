@@ -9,12 +9,20 @@ class StatusOverviewWidget extends StatelessWidget {
     this.learning = 0,
     this.reviewing = 0,
     this.mastered = 0,
+    this.newWordsDelta = 0,
+    this.learningDelta = 0,
+    this.reviewingDelta = 0,
+    this.masteredDelta = 0,
   });
 
   final int newWords;
   final int learning;
   final int reviewing;
   final int mastered;
+  final int newWordsDelta;
+  final int learningDelta;
+  final int reviewingDelta;
+  final int masteredDelta;
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +38,7 @@ class StatusOverviewWidget extends StatelessWidget {
               AppColors.tertiary70,
               'New Words',
               newWords,
+              newWordsDelta,
             ),
           ),
           Expanded(
@@ -38,6 +47,7 @@ class StatusOverviewWidget extends StatelessWidget {
               AppColors.tertiary60,
               'Learning',
               learning,
+              learningDelta,
             ),
           ),
           Expanded(
@@ -46,6 +56,7 @@ class StatusOverviewWidget extends StatelessWidget {
               AppColors.tertiary50,
               'Reviewing',
               reviewing,
+              reviewingDelta,
             ),
           ),
           Expanded(
@@ -54,6 +65,7 @@ class StatusOverviewWidget extends StatelessWidget {
               AppColors.tertiary40,
               'Mastered',
               mastered,
+              masteredDelta,
             ),
           ),
         ],
@@ -66,6 +78,7 @@ class StatusOverviewWidget extends StatelessWidget {
     Color color,
     String label,
     int count,
+    int delta,
   ) {
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -75,7 +88,7 @@ class StatusOverviewWidget extends StatelessWidget {
         Text(label, style: context.captionStyle.copyWith(color: Colors.grey)),
         const SizedBox(height: 8),
         Text(
-          '$count',
+          delta == 0 ? '$count' : '$count $delta',
           style: context.bodyStyle.copyWith(fontWeight: FontWeight.w300),
         ),
       ],

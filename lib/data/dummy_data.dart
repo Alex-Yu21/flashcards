@@ -2,6 +2,7 @@ import 'package:flashcards/shared/domain/entities/flashcard.dart';
 
 final List<Flashcard> dummyFlashcards = [
   Flashcard(
+    id: '1',
     title: 'cane',
     transcription: '[ˈka.ne]',
     audioPath: null,
@@ -10,6 +11,7 @@ final List<Flashcard> dummyFlashcards = [
     description: 'Il cane corre nel parco.',
   ),
   Flashcard(
+    id: '2',
     title: 'gatto',
     transcription: '[ˈɡat.to]',
     audioPath: null,
@@ -18,6 +20,7 @@ final List<Flashcard> dummyFlashcards = [
     description: 'Il gatto dorme sul divano.',
   ),
   Flashcard(
+    id: '3',
     title: 'casa',
     transcription: '[ˈka.sa]',
     audioPath: null,
@@ -26,6 +29,7 @@ final List<Flashcard> dummyFlashcards = [
     description: 'La mia casa è grande e luminosa.',
   ),
   Flashcard(
+    id: '4',
     title: 'libro',
     transcription: '[ˈli.bro]',
     audioPath: null,
@@ -34,6 +38,7 @@ final List<Flashcard> dummyFlashcards = [
     description: 'Sto leggendo un libro interessante.',
   ),
   Flashcard(
+    id: '5',
     title: 'amico',
     transcription: '[aˈmi.ko]',
     audioPath: null,
@@ -42,6 +47,7 @@ final List<Flashcard> dummyFlashcards = [
     description: 'Il mio amico vive a Roma.',
   ),
   Flashcard(
+    id: '6',
     title: 'mela',
     transcription: '[ˈme.la]',
     audioPath: null,
@@ -50,6 +56,7 @@ final List<Flashcard> dummyFlashcards = [
     description: 'Mangio una mela ogni giorno.',
   ),
   Flashcard(
+    id: '7',
     title: 'scuola',
     transcription: '[ˈskwo.la]',
     audioPath: null,
@@ -58,6 +65,7 @@ final List<Flashcard> dummyFlashcards = [
     description: 'I bambini vanno a scuola ogni mattina.',
   ),
   Flashcard(
+    id: '8',
     title: 'sole',
     transcription: '[ˈso.le]',
     audioPath: null,
@@ -66,6 +74,7 @@ final List<Flashcard> dummyFlashcards = [
     description: 'Il sole splende alto nel cielo.',
   ),
   Flashcard(
+    id: '9',
     title: 'acqua',
     transcription: '[ˈak.kwa]',
     audioPath: null,
@@ -74,6 +83,7 @@ final List<Flashcard> dummyFlashcards = [
     description: 'Bevo molta acqua durante il giorno.',
   ),
   Flashcard(
+    id: '10',
     title: 'tempo',
     transcription: '[ˈtɛm.po]',
     audioPath: null,

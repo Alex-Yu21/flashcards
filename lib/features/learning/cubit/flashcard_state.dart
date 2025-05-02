@@ -4,10 +4,10 @@ abstract class FlashcardState {}
 
 class FlashcardInitial extends FlashcardState {}
 
-class FlashcardLoaded extends FlashcardState {
+class FlashcardsLoaded extends FlashcardState {
   final List<Flashcard> flashcards;
 
-  FlashcardLoaded(this.flashcards);
+  FlashcardsLoaded(this.flashcards);
 }
 
 class FlashcardFinished extends FlashcardState {}

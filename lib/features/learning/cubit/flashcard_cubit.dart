@@ -1,48 +1,52 @@
 import 'package:flashcards/features/learning/cubit/flashcard_state.dart';
 import 'package:flashcards/shared/domain/entities/card_category.dart';
 import 'package:flashcards/shared/domain/entities/flashcard.dart';
+import 'package:flashcards/shared/domain/repositories/flashcard_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class FlashcardCubit extends Cubit<FlashcardState> {
-  FlashcardCubit() : super(FlashcardInitial());
+  final FlashcardRepository _repo;
+  late List<Flashcard> _cards;
 
-  final List<Flashcard> _flashcards = [];
+  FlashcardCubit(this._repo) : super(FlashcardInitial());
 
-  void loadFlashcards(List<Flashcard> cards) {
-    _flashcards
-      ..clear()
-      ..addAll(cards);
-    emit(FlashcardLoaded(List.unmodifiable(_flashcards)));
+  Future<void> init() async {
+    _cards = await _repo.fetchAllFlashcards();
+    emit(FlashcardsLoaded(List.unmodifiable(_cards)));
   }
 
-  void changeCategory(Flashcard card, CardCategory newCategory) {
-    final index = _flashcards.indexOf(card);
-    if (index == -1) return;
+  void promoteCard(Flashcard card) =>
+      _updateCategory(card, card.category.promoteNext);
 
-    _flashcards[index] = Flashcard(
-      title: card.title,
-      transcription: card.transcription,
-      translation: card.translation,
-      description: card.description,
-      hint: card.hint,
-      audioPath: card.audioPath,
-      category: newCategory,
+  void regressCard(Flashcard card) =>
+      _updateCategory(card, card.category.regressNext);
+
+  void _updateCategory(Flashcard card, CardCategory newCat) {
+    final idx = _cards.indexWhere((c) => c.id == card.id);
+    if (idx == -1) return;
+
+    final updated = card.copyWith(category: newCat);
+    _cards[idx] = updated;
+
+    _repo.saveFlashcard(updated);
+
+    emit(
+      _cards.isEmpty
+          ? FlashcardFinished()
+          : FlashcardsLoaded(List.unmodifiable(_cards)),
     );
-    emit(FlashcardLoaded(List.unmodifiable(_flashcards)));
   }
+}
 
-  void promoteCard(Flashcard card) {
-    changeCategory(card, card.category.promoteNext);
-
-    if (_flashcards.isEmpty) {
-      emit(FlashcardFinished());
-    }
-  }
-
-  void regressCard(Flashcard card) {
-    changeCategory(card, card.category.regressNext);
-    if (_flashcards.isEmpty) {
-      emit(FlashcardFinished());
-    }
-  }
+extension FlashcardCopy on Flashcard {
+  Flashcard copyWith({CardCategory? category}) => Flashcard(
+    id: id,
+    title: title,
+    transcription: transcription,
+    translation: translation,
+    description: description,
+    hint: hint,
+    audioPath: audioPath,
+    category: category ?? this.category,
+  );
 }
