@@ -90,8 +90,8 @@ class HomeScreen extends StatelessWidget {
     currentIndex: 0,
     items: const [
       BottomNavigationBarItem(icon: Icon(Icons.home), label: ''),
-      BottomNavigationBarItem(icon: Icon(Icons.menu_book), label: ''),
       BottomNavigationBarItem(icon: Icon(Icons.search), label: ''),
+      BottomNavigationBarItem(icon: Icon(Icons.menu_book), label: ''),
       BottomNavigationBarItem(icon: Icon(Icons.settings), label: ''),
     ],
   );

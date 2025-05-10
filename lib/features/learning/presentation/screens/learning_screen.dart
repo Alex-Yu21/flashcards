@@ -110,6 +110,7 @@ class _LearningScreenState extends State<LearningScreen> {
                       isLoop: false,
                       cardBuilder:
                           (_, index, __, ___) => FlipCard(
+                            key: ValueKey('flip_$index'),
                             rotateSide: RotateSide.right,
                             animationDuration: const Duration(
                               milliseconds: 400,
