@@ -17,7 +17,7 @@ class AppColorsLight {
     onTertiary: Color(0xffffffff),
     tertiaryContainer: Color(0xff896178),
     onTertiaryContainer: Color(0xffffffff),
-    error: Color(0xff740006),
+    error: Color.fromARGB(255, 180, 77, 82),
     onError: Color(0xffffffff),
     errorContainer: Color(0xffcf2c27),
     onErrorContainer: Color(0xffffffff),

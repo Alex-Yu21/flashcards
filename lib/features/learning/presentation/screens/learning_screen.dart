@@ -1,4 +1,5 @@
 import 'package:flashcards/core/extensions/context_extensions.dart';
+import 'package:flashcards/core/theme/app_colors.dart';
 import 'package:flashcards/features/learning/cubit/flashcard_cubit.dart';
 import 'package:flashcards/features/learning/cubit/flashcard_state.dart';
 import 'package:flashcards/features/learning/presentation/widgets/action_button_widget.dart';
@@ -54,6 +55,12 @@ class _LearningScreenState extends State<LearningScreen> {
     }
   }
 
+  void _undoSwipe() {
+    if (_currentIndex == 0) return;
+    _swiperCtrl.undo();
+    setState(() => _currentIndex--);
+  }
+
   @override
   Widget build(BuildContext context) {
     final h = context.screenHeight;
@@ -84,16 +91,33 @@ class _LearningScreenState extends State<LearningScreen> {
               }
 
               return Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Padding(
-                    padding: EdgeInsets.all(context.paddingM),
+                    padding: EdgeInsets.symmetric(horizontal: padM),
                     child: ProgressLineWidget(
                       learned: _currentIndex,
                       total: flashcards.length,
                     ),
                   ),
-
-                  SizedBox(height: h * 0.12),
+                  Padding(
+                    padding: EdgeInsets.only(
+                      right: padM,
+                      top: padXS,
+                      bottom: padM,
+                    ),
+                    child: SizedBox(
+                      height: h * 0.16,
+                      child:
+                          _currentIndex == 0
+                              ? const Spacer()
+                              : ActionButtonWidget(
+                                size: h * 0.064,
+                                icon: Icons.undo,
+                                onTap: _undoSwipe,
+                              ),
+                    ),
+                  ),
                   SizedBox(
                     height: h * 0.30,
                     width: w * 0.98,
@@ -159,10 +183,12 @@ class _LearningScreenState extends State<LearningScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           ActionButtonWidget(
+            color: Theme.of(context).colorScheme.error,
             icon: Icons.close,
             onTap: () => _swiperCtrl.swipe(CardSwiperDirection.left),
           ),
           ActionButtonWidget(
+            color: AppColors.yes2,
             icon: Icons.done,
             onTap: () => _swiperCtrl.swipe(CardSwiperDirection.right),
           ),
