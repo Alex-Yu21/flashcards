@@ -2,7 +2,7 @@ import 'package:flashcards/core/theme/app_theme.dart';
 import 'package:flashcards/data/dummy_data.dart';
 import 'package:flashcards/data/repositories/dummy_flashcard_repository.dart';
 import 'package:flashcards/features/home/cubit/statistics_cubit.dart';
-import 'package:flashcards/features/home/presentation/screens/home_screen.dart';
+import 'package:flashcards/features/tabs/presentation/screens/tabs_screen.dart';
 import 'package:flashcards/shared/domain/repositories/flashcard_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -35,7 +35,7 @@ class FlashcardsApp extends StatelessWidget {
       theme: AppTheme(textTheme).lightMediumContrast(),
       darkTheme: AppTheme(textTheme).darkMediumContrast(),
       themeMode: ThemeMode.system,
-      home: const HomeScreenRoute(),
+      home: const TabsScreen(),
     );
   }
 }

@@ -8,17 +8,12 @@ class AppBottomNavBar extends StatelessWidget {
     this.onItemSelected,
   });
 
-  /// Индекс активного пункта.
   final int currentIndex;
-
-  /// Коллбэк для смены вкладки (можно оставить null,
-  /// если экран не должен реагировать).
   final ValueChanged<int>? onItemSelected;
 
   @override
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
-
     return BottomNavigationBar(
       backgroundColor: Color.alphaBlend(
         Colors.grey.withAlpha((0.2 * 255).round()),

@@ -1,5 +1,4 @@
 import 'package:flashcards/core/extensions/context_extensions.dart';
-import 'package:flashcards/core/theme/app_colors.dart';
 import 'package:flashcards/features/home/cubit/statistics_cubit.dart';
 import 'package:flashcards/features/home/cubit/statistics_state.dart';
 import 'package:flashcards/features/home/cubit/status_overview_cubit.dart';
@@ -44,7 +43,7 @@ class HomeScreen extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: cs.surface,
-      bottomNavigationBar: _bottomBar(cs),
+      // bottomNavigationBar: _bottomBar(cs),
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -83,18 +82,18 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _bottomBar(ColorScheme cs) => BottomNavigationBar(
-    backgroundColor: cs.onSurfaceVariant,
-    selectedItemColor: AppColors.tertiary40,
-    unselectedItemColor: cs.outlineVariant,
-    currentIndex: 0,
-    items: const [
-      BottomNavigationBarItem(icon: Icon(Icons.home), label: ''),
-      BottomNavigationBarItem(icon: Icon(Icons.search), label: ''),
-      BottomNavigationBarItem(icon: Icon(Icons.menu_book), label: ''),
-      BottomNavigationBarItem(icon: Icon(Icons.settings), label: ''),
-    ],
-  );
+  // Widget _bottomBar(ColorScheme cs) => BottomNavigationBar(
+  //   backgroundColor: cs.onSurfaceVariant,
+  //   selectedItemColor: AppColors.tertiary40,
+  //   unselectedItemColor: cs.outlineVariant,
+  //   currentIndex: 0,
+  //   items: const [
+  //     BottomNavigationBarItem(icon: Icon(Icons.home), label: ''),
+  //     BottomNavigationBarItem(icon: Icon(Icons.search), label: ''),
+  //     BottomNavigationBarItem(icon: Icon(Icons.menu_book), label: ''),
+  //     BottomNavigationBarItem(icon: Icon(Icons.settings), label: ''),
+  //   ],
+  // );
 
   Widget _header(BuildContext context, double h) => Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
