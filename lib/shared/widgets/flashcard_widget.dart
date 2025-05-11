@@ -1,5 +1,5 @@
-import 'package:flashcards/shared/domain/entities/flashcard.dart';
 import 'package:flashcards/core/extensions/context_extensions.dart';
+import 'package:flashcards/shared/domain/entities/flashcard.dart';
 import 'package:flutter/material.dart';
 
 class FlashcardWidget extends StatelessWidget {
@@ -106,7 +106,7 @@ class FlashcardWidget extends StatelessWidget {
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text('Learn more'),
+              const Text('Learn more'),
               Icon(Icons.chevron_right, size: iconSize * 0.8),
             ],
           ),

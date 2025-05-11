@@ -1,5 +1,5 @@
 import 'package:flashcards/core/theme/app_colors.dart';
-import 'package:flashcards/features/learning/presentation/widgets/action_button_widget.dart';
+import 'package:flashcards/shared/widgets/action_button_widget.dart';
 import 'package:flutter/material.dart';
 
 class AnswerButtons extends StatelessWidget {

@@ -9,12 +9,16 @@ const _barHeight = kBottomNavigationBarHeight;
 class TabsScreen extends StatefulWidget {
   const TabsScreen({super.key});
 
+  static TabsScreenState? of(BuildContext context) =>
+      context.findAncestorStateOfType<TabsScreenState>();
+
   @override
-  State<TabsScreen> createState() => _TabsScreenState();
+  State<TabsScreen> createState() => TabsScreenState();
 }
 
-class _TabsScreenState extends State<TabsScreen> {
+class TabsScreenState extends State<TabsScreen> {
   int _current = 0;
+  void switchTo(int index) => setState(() => _current = index);
   late final List<GlobalKey<NavigatorState>> _navKeys;
   late final List<bool> _tabHasInnerRoute;
   late final List<Widget> _rootPages;

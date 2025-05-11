@@ -1,4 +1,4 @@
-import 'package:flashcards/features/learning/presentation/widgets/action_button_widget.dart';
+import 'package:flashcards/shared/widgets/action_button_widget.dart';
 import 'package:flutter/material.dart';
 
 class UndoButton extends StatelessWidget {
