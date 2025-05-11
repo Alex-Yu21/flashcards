@@ -108,14 +108,34 @@ class _LearningScreenState extends State<LearningScreen> {
                     ),
                     child: SizedBox(
                       height: h * 0.16,
-                      child:
-                          _currentIndex == 0
-                              ? const Spacer()
-                              : ActionButtonWidget(
-                                size: h * 0.064,
-                                icon: Icons.undo,
-                                onTap: _undoSwipe,
-                              ),
+                      child: AnimatedSwitcher(
+                        duration: const Duration(milliseconds: 300),
+                        switchInCurve: Curves.easeOut,
+                        switchOutCurve: Curves.easeIn,
+                        transitionBuilder: (child, anim) {
+                          final offsetAnim = Tween<Offset>(
+                            begin: const Offset(1.0, 0),
+                            end: Offset.zero,
+                          ).animate(anim);
+                          return SlideTransition(
+                            position: offsetAnim,
+                            child: FadeTransition(opacity: anim, child: child),
+                          );
+                        },
+                        child:
+                            _currentIndex == 0
+                                ? const SizedBox(
+                                  width: 0,
+                                  height: 0,
+                                  key: ValueKey('empty'),
+                                )
+                                : ActionButtonWidget(
+                                  key: const ValueKey('undo'),
+                                  size: h * 0.064,
+                                  icon: Icons.undo,
+                                  onTap: _undoSwipe,
+                                ),
+                      ),
                     ),
                   ),
                   SizedBox(
