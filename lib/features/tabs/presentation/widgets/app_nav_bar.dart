@@ -24,6 +24,8 @@ class AppBottomNavBar extends StatelessWidget {
       type: BottomNavigationBarType.fixed,
       currentIndex: currentIndex,
       onTap: onItemSelected,
+      showSelectedLabels: false,
+      showUnselectedLabels: false,
       items: const [
         BottomNavigationBarItem(icon: Icon(Icons.home), label: ''),
         BottomNavigationBarItem(icon: Icon(Icons.search), label: ''),
