@@ -1,18 +1,16 @@
 import 'package:flashcards/core/extensions/context_extensions.dart';
-import 'package:flashcards/core/theme/app_colors.dart';
 import 'package:flashcards/features/learning/cubit/flashcard_cubit.dart';
 import 'package:flashcards/features/learning/cubit/flashcard_state.dart';
-import 'package:flashcards/features/learning/presentation/widgets/action_button_widget.dart';
+import 'package:flashcards/features/learning/presentation/widgets/answer_buttons.dart';
+import 'package:flashcards/features/learning/presentation/widgets/flashcard_swiper.dart';
 import 'package:flashcards/features/learning/presentation/widgets/progress_line_widget.dart';
+import 'package:flashcards/features/learning/presentation/widgets/undo_buttons.dart';
 import 'package:flashcards/shared/domain/entities/flashcard.dart';
 import 'package:flashcards/shared/domain/repositories/flashcard_repository.dart';
-import 'package:flashcards/shared/widgets/flashcard_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:flutter_flip_card/controllers/flip_card_controllers.dart';
-import 'package:flutter_flip_card/flipcard/flip_card.dart';
-import 'package:flutter_flip_card/modal/flip_side.dart';
 
 class LearningScreen extends StatefulWidget {
   const LearningScreen({super.key});
@@ -93,99 +91,47 @@ class _LearningScreenState extends State<LearningScreen> {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: padM),
-                    child: ProgressLineWidget(
-                      learned: _currentIndex,
-                      total: flashcards.length,
-                    ),
+                  ProgressLineWidget(
+                    learned: _currentIndex,
+                    total: flashcards.length,
                   ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                      right: padM,
-                      top: padXS,
-                      bottom: padM,
-                    ),
-                    child: SizedBox(
-                      height: h * 0.16,
-                      child: AnimatedSwitcher(
-                        duration: const Duration(milliseconds: 300),
-                        switchInCurve: Curves.easeOut,
-                        switchOutCurve: Curves.easeIn,
-                        transitionBuilder: (child, anim) {
-                          final offsetAnim = Tween<Offset>(
-                            begin: const Offset(1.0, 0),
-                            end: Offset.zero,
-                          ).animate(anim);
-                          return SlideTransition(
-                            position: offsetAnim,
-                            child: FadeTransition(opacity: anim, child: child),
-                          );
-                        },
-                        child:
-                            _currentIndex == 0
-                                ? const SizedBox(
-                                  width: 0,
-                                  height: 0,
-                                  key: ValueKey('empty'),
-                                )
-                                : ActionButtonWidget(
-                                  key: const ValueKey('undo'),
-                                  size: h * 0.064,
-                                  icon: Icons.undo,
-                                  onTap: _undoSwipe,
-                                ),
-                      ),
-                    ),
+                  UndoButton(
+                    isVisible: _currentIndex != 0,
+                    height: h * 0.16,
+                    rightPadding: padM,
+                    topPadding: padXS,
+                    bottomPadding: padM,
+                    buttonSize: h * 0.064,
+                    onUndo: _undoSwipe,
                   ),
-                  SizedBox(
+                  FlashcardSwiper(
                     height: h * 0.30,
                     width: w * 0.98,
-                    child: CardSwiper(
-                      controller: _swiperCtrl,
-                      cardsCount: flashcards.length,
-                      numberOfCardsDisplayed: 3,
-                      allowedSwipeDirection:
-                          const AllowedSwipeDirection.symmetric(
-                            horizontal: true,
-                          ),
-                      backCardOffset: const Offset(0, -30),
-                      padding: EdgeInsets.zero,
-                      isLoop: false,
-                      cardBuilder:
-                          (_, index, __, ___) => FlipCard(
-                            key: ValueKey('flip_$index'),
-                            rotateSide: RotateSide.right,
-                            animationDuration: const Duration(
-                              milliseconds: 400,
-                            ),
-                            onTapFlipping: false,
-                            axis: FlipAxis.vertical,
-                            controller: _flipCtrls[index],
-                            frontWidget: FlashcardWidget(
-                              flashcard: flashcards[index],
-                              color: Theme.of(context).colorScheme.primary,
-                            ),
-                            backWidget: FlashcardWidget(
-                              flashcard: flashcards[index],
-                              isTurned: true,
-                              color: Theme.of(context).colorScheme.primary,
-                            ),
-                          ),
-                      onSwipe: (oldIdx, newIdx, dir) {
-                        _processAnswer(flashcards[oldIdx], dir);
-                        if (newIdx != null)
-                          setState(() => _currentIndex = newIdx);
-                        return true;
-                      },
-                    ),
+                    flashcards: flashcards,
+                    swiperCtrl: _swiperCtrl,
+                    flipCtrls: _flipCtrls,
+                    onSwipe: (oldIdx, newIdx, dir) {
+                      _processAnswer(flashcards[oldIdx], dir);
+                      if (newIdx != null)
+                        setState(() => _currentIndex = newIdx);
+                      return true;
+                    },
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(
                       horizontal: padM,
                       vertical: padXS,
                     ),
-                    child: SizedBox(height: h * 0.28, child: _buttons()),
+                    child: SizedBox(
+                      height: h * 0.28,
+                      child: AnswerButtons(
+                        onReveal: _reveal,
+                        onSwipeLeft:
+                            () => _swiperCtrl.swipe(CardSwiperDirection.left),
+                        onSwipeRight:
+                            () => _swiperCtrl.swipe(CardSwiperDirection.right),
+                      ),
+                    ),
                   ),
                 ],
               );
@@ -195,32 +141,4 @@ class _LearningScreenState extends State<LearningScreen> {
       ),
     );
   }
-
-  Stack _buttons() => Stack(
-    alignment: Alignment.center,
-    children: [
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          ActionButtonWidget(
-            color: Theme.of(context).colorScheme.error,
-            icon: Icons.close,
-            onTap: () => _swiperCtrl.swipe(CardSwiperDirection.left),
-          ),
-          ActionButtonWidget(
-            color: AppColors.yes2,
-            icon: Icons.done,
-            onTap: () => _swiperCtrl.swipe(CardSwiperDirection.right),
-          ),
-        ],
-      ),
-      Positioned(
-        bottom: 0,
-        child: ActionButtonWidget(
-          onTap: _reveal,
-          icon: Icons.visibility_off_outlined,
-        ),
-      ),
-    ],
-  );
 }

@@ -18,6 +18,5 @@ class AppColors {
   static const Color tertiary15 = Color(0xFF3A1B30);
   static const Color tertiary10 = Color(0xFF2E1126);
   static const Color tertiary5 = Color(0xFF22071B);
-
   static const Color yes2 = Color(0xff6fa26f);
 }
