@@ -10,7 +10,7 @@ class CelebrationConfetti extends StatelessWidget {
     this.minBlastForce = 8,
     this.maxBlastForce = 20,
     this.emissionFrequency = 0.02,
-    this.numberOfParticles = 18,
+    this.numberOfParticles = 118,
     this.gravity = 0.45,
   });
 
@@ -28,6 +28,9 @@ class CelebrationConfetti extends StatelessWidget {
     return Align(
       alignment: alignment,
       child: ConfettiWidget(
+        createParticlePath: drawLeafHeart,
+        minimumSize: const Size(12, 12),
+        maximumSize: const Size(36, 36),
         confettiController: controller,
         colors: AppColors.confettiColors,
         blastDirectionality: BlastDirectionality.explosive,
@@ -39,4 +42,25 @@ class CelebrationConfetti extends StatelessWidget {
       ),
     );
   }
+}
+
+Path drawLeafHeart(Size size) {
+  final double w = size.width;
+  final double h = size.height;
+  final Path p = Path();
+
+  p.moveTo(w * 0.5, h);
+  p.lineTo(w * 0.47, h * 0.88);
+  p.lineTo(w * 0.53, h * 0.88);
+  p.lineTo(w * 0.5, h);
+  p.moveTo(w * 0.5, h * 0.88);
+
+  p.cubicTo(w * 0.10, h * 0.78, 0, h * 0.45, w * 0.25, h * 0.20);
+
+  p.cubicTo(w * 0.40, h * 0.00, w * 0.60, h * 0.00, w * 0.75, h * 0.20);
+
+  p.cubicTo(w, h * 0.45, w * 0.90, h * 0.78, w * 0.5, h * 0.88);
+
+  p.close();
+  return p;
 }

@@ -1,6 +1,6 @@
 import 'package:confetti/confetti.dart';
 import 'package:flashcards/core/extensions/context_extensions.dart';
-import 'package:flashcards/shared/widgets/celebration_confetti.dart';
+import 'package:flashcards/shared/widgets/celebration_confetti_widget.dart';
 import 'package:flutter/material.dart';
 
 class CategoryWidget extends StatefulWidget {
@@ -28,7 +28,7 @@ class _CategoryWidgetState extends State<CategoryWidget> {
   @override
   void initState() {
     super.initState();
-    _confettiCtrl = ConfettiController(duration: const Duration(seconds: 1));
+    _confettiCtrl = ConfettiController(duration: const Duration(seconds: 3));
     _prevCount = widget.count;
   }
 
