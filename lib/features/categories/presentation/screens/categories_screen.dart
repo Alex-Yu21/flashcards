@@ -37,7 +37,6 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                 CategoryWidget(
                   label: 'New words',
                   count: 10,
-                  // TODO если 0, то передавать 0 как то так, чтобы не тригерилась анимация замка
                   caption: '- Practice every day',
                   onTap: () {},
                 ),

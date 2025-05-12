@@ -1,6 +1,6 @@
 import 'package:confetti/confetti.dart';
 import 'package:flashcards/core/extensions/context_extensions.dart';
-import 'package:flashcards/core/theme/app_colors.dart';
+import 'package:flashcards/shared/widgets/celebration_confetti.dart';
 import 'package:flutter/material.dart';
 
 class CategoryWidget extends StatefulWidget {
@@ -120,22 +120,11 @@ class _CategoryWidgetState extends State<CategoryWidget> {
               ),
             ),
           ),
-          Align(
-            alignment: Alignment.topRight,
-            child: ConfettiWidget(
-              colors: AppColors.confettiColors,
-              confettiController: _confettiCtrl,
-              blastDirectionality: BlastDirectionality.explosive,
-              minBlastForce: 8,
-              maxBlastForce: 20,
-              emissionFrequency: 0.02,
-              numberOfParticles: 18,
-              gravity: 0.45,
-
-              // minimumSize: Size(padXS * 0.6, padXS * 0.6),
-              // maximumSize: Size(padXS * 1.2, padXS * 1.2),
+          if (widget.label != 'New words')
+            CelebrationConfetti(
+              controller: _confettiCtrl,
+              alignment: Alignment.topRight,
             ),
-          ),
         ],
       ),
     );
