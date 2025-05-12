@@ -19,4 +19,16 @@ class AppColors {
   static const Color tertiary10 = Color(0xFF2E1126);
   static const Color tertiary5 = Color(0xFF22071B);
   static const Color yes2 = Color(0xff6fa26f);
+
+  static const List<Color> confettiColors = [
+    tertiary80,
+    tertiary70,
+    tertiary60,
+    tertiary50,
+    tertiary40,
+    tertiary35,
+    tertiary30,
+    tertiary25,
+    tertiary20,
+  ];
 }

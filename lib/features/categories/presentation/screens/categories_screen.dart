@@ -37,25 +37,26 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                 CategoryWidget(
                   label: 'New words',
                   count: 10,
-                  caption: '- Repeat',
+                  // TODO если 0, то передавать 0 как то так, чтобы не тригерилась анимация замка
+                  caption: '- Practice every day',
                   onTap: () {},
                 ),
                 CategoryWidget(
                   label: 'Learning',
-                  count: 10,
-                  caption: '',
+                  count: 0,
+                  caption: '- Review every other day',
                   onTap: () {},
                 ),
                 CategoryWidget(
                   label: 'Reviewing',
-                  count: 10,
-                  caption: '',
+                  count: 0,
+                  caption: '- Refresh once a week',
                   onTap: () {},
                 ),
                 CategoryWidget(
                   label: 'Mastered',
-                  count: 10,
-                  caption: '',
+                  count: 0,
+                  caption: '- Repeat occasionally to retain',
                   onTap: () {},
                 ),
               ],
