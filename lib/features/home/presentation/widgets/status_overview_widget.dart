@@ -1,8 +1,7 @@
-import 'dart:async';
-
 import 'package:flashcards/core/extensions/context_extensions.dart';
 import 'package:flashcards/core/theme/app_colors.dart';
 import 'package:flashcards/features/home/cubit/status_overview_cubit.dart';
+import 'package:flashcards/shared/widgets/timed_count_up.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -110,78 +109,6 @@ class _StatItem extends StatelessWidget {
               ],
             ),
       ],
-    );
-  }
-}
-
-class TimedCountUp extends StatefulWidget {
-  final int start;
-  final int end;
-  final Duration totalDuration;
-  final TextStyle? style;
-
-  const TimedCountUp({
-    super.key,
-    required this.start,
-    required this.end,
-    this.totalDuration = const Duration(milliseconds: 800),
-    this.style,
-  });
-
-  @override
-  State<TimedCountUp> createState() => _TimedCountUpState();
-}
-
-class _TimedCountUpState extends State<TimedCountUp> {
-  late int _current;
-  Timer? _timer;
-
-  @override
-  void initState() {
-    super.initState();
-    _runCounter();
-  }
-
-  @override
-  void didUpdateWidget(TimedCountUp oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (oldWidget.end != widget.end) _runCounter();
-  }
-
-  void _runCounter() {
-    _timer?.cancel();
-    _current = widget.start;
-
-    final steps = (widget.end - widget.start).abs();
-    if (steps == 0) {
-      setState(() {});
-      return;
-    }
-
-    final stepDuration = widget.totalDuration ~/ steps;
-
-    _timer = Timer.periodic(stepDuration, (t) {
-      if (_current == widget.end) {
-        t.cancel();
-      } else {
-        setState(() {
-          _current += widget.start < widget.end ? 1 : -1;
-        });
-      }
-    });
-  }
-
-  @override
-  void dispose() {
-    _timer?.cancel();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Text(
-      _current.toString(),
-      style: widget.style ?? Theme.of(context).textTheme.bodyMedium,
     );
   }
 }

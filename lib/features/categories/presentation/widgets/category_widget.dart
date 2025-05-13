@@ -37,11 +37,13 @@ class _CategoryWidgetState extends State<CategoryWidget> {
     super.didUpdateWidget(oldWidget);
     final bool isNewWords = widget.label == 'New words';
 
-    if (!isNewWords && _prevCount == 0 && widget.count > 0) {
-      await Future.delayed(const Duration(seconds: 1));
-      _confettiCtrl.play();
-    }
-    _prevCount = widget.count;
+    Future.microtask(() {
+      if (!isNewWords && _prevCount == 0 && widget.count > 0) {
+        Future.delayed(const Duration(seconds: 1));
+        _confettiCtrl.play();
+      }
+      _prevCount = widget.count;
+    });
   }
 
   @override
