@@ -40,6 +40,7 @@ class HomeScreen extends StatelessWidget {
     final pS = context.paddingS;
     final pM = context.paddingM;
     final pL = context.paddingL;
+    final url = '';
 
     return Scaffold(
       backgroundColor: cs.surface,
@@ -52,7 +53,7 @@ class HomeScreen extends StatelessWidget {
               flex: 18,
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: pM, vertical: pXS),
-                child: _header(context, h),
+                child: _header(context, h, url),
               ),
             ),
             SizedBox(height: pL),
@@ -95,14 +96,21 @@ class HomeScreen extends StatelessWidget {
   //   ],
   // );
 
-  Widget _header(BuildContext context, double h) => Row(
-    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      Text('Todays\ndashboard', style: context.headerStyle),
-      CircleAvatar(radius: h * 0.028, backgroundImage: const NetworkImage('')),
-    ],
-  );
+  Widget _header(BuildContext context, double h, String? url) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text('Todays\ndashboard', style: context.headerStyle),
+        CircleAvatar(
+          radius: h * 0.028,
+          backgroundImage:
+              (url != null && url.isNotEmpty) ? NetworkImage(url) : null,
+          child: (url == null || url.isEmpty) ? const Icon(Icons.person) : null,
+        ),
+      ],
+    );
+  }
 
   Widget _bottomSheet({
     required double h,
