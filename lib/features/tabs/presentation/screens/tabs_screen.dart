@@ -29,7 +29,7 @@ class TabsScreenState extends State<TabsScreen> {
     _navKeys = List.generate(4, (_) => GlobalKey<NavigatorState>());
     _tabHasInnerRoute = List.filled(4, false);
     _rootPages = const [
-      HomeScreenRoute(),
+      HomeScreen(),
       CategoriesScreen(),
       CollectionsScreen(),
       SettingsScreen(),

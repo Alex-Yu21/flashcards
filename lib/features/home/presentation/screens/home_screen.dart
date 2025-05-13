@@ -11,23 +11,6 @@ import 'package:flashcards/shared/domain/repositories/flashcard_repository.dart'
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class HomeScreenRoute extends StatelessWidget {
-  const HomeScreenRoute({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final repo = context.read<FlashcardRepository>();
-
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(create: (_) => StatisticsCubit(repo)..init()),
-        BlocProvider(create: (_) => StatusOverviewCubit()),
-      ],
-      child: const HomeScreen(),
-    );
-  }
-}
-
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
@@ -44,7 +27,6 @@ class HomeScreen extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: cs.surface,
-      // bottomNavigationBar: _bottomBar(cs),
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -82,19 +64,6 @@ class HomeScreen extends StatelessWidget {
       ),
     );
   }
-
-  // Widget _bottomBar(ColorScheme cs) => BottomNavigationBar(
-  //   backgroundColor: cs.onSurfaceVariant,
-  //   selectedItemColor: AppColors.tertiary40,
-  //   unselectedItemColor: cs.outlineVariant,
-  //   currentIndex: 0,
-  //   items: const [
-  //     BottomNavigationBarItem(icon: Icon(Icons.home), label: ''),
-  //     BottomNavigationBarItem(icon: Icon(Icons.search), label: ''),
-  //     BottomNavigationBarItem(icon: Icon(Icons.menu_book), label: ''),
-  //     BottomNavigationBarItem(icon: Icon(Icons.settings), label: ''),
-  //   ],
-  // );
 
   Widget _header(BuildContext context, double h, String? url) {
     return Row(
