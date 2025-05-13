@@ -33,17 +33,19 @@ class _CategoryWidgetState extends State<CategoryWidget> {
   }
 
   @override
-  void didUpdateWidget(covariant CategoryWidget oldWidget) async {
+  void didUpdateWidget(covariant CategoryWidget oldWidget) {
     super.didUpdateWidget(oldWidget);
-    final bool isNewWords = widget.label == 'New words';
 
-    Future.microtask(() {
-      if (!isNewWords && _prevCount == 0 && widget.count > 0) {
-        Future.delayed(const Duration(seconds: 1));
-        _confettiCtrl.play();
-      }
-      _prevCount = widget.count;
-    });
+    final bool isNewWords = widget.label == 'New words';
+    final justUnlocked = !isNewWords && _prevCount == 0 && widget.count > 0;
+
+    if (justUnlocked) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Future.delayed(const Duration(seconds: 5), _confettiCtrl.play);
+      });
+    }
+
+    _prevCount = widget.count;
   }
 
   @override
