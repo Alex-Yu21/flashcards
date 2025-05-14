@@ -39,7 +39,10 @@ class ShakingLock extends StatelessWidget {
           child: child,
         );
       },
-      child: const Icon(Icons.lock),
+      child: Icon(
+        Icons.lock,
+        color: Theme.of(context).colorScheme.onPrimaryContainer,
+      ),
     );
   }
 }

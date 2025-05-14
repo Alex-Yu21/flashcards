@@ -90,7 +90,7 @@ class _CategoryWidgetState extends State<CategoryWidget>
       if (newWords) {
         return _StatItem(item: widget.count, shouldAnimate: _animate);
       }
-      if (locked) return const Icon(Icons.lock);
+      if (locked) return Icon(Icons.lock, color: cs.onPrimaryContainer);
 
       if (_animate) {
         return Stack(
@@ -178,6 +178,10 @@ class _StatItem extends StatelessWidget {
       return Text('${item.to}');
     }
     return TimedCountUp(
+      style: context.bodyStyle.copyWith(
+        color: Theme.of(context).colorScheme.onPrimaryContainer,
+        fontSize: context.paddingS,
+      ),
       key: ValueKey(item.to),
       start: item.from,
       end: item.to,
