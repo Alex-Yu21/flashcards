@@ -1,6 +1,6 @@
 import 'package:flashcards/core/extensions/context_extensions.dart';
 import 'package:flashcards/core/theme/app_colors.dart';
-import 'package:flashcards/features/home/cubit/status_overview_cubit.dart';
+import 'package:flashcards/shared/cubit/status_overview_cubit.dart';
 import 'package:flashcards/shared/widgets/timed_count_up.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

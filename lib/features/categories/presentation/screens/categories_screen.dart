@@ -1,10 +1,8 @@
 import 'package:flashcards/core/extensions/context_extensions.dart';
 import 'package:flashcards/core/theme/app_colors.dart';
 import 'package:flashcards/features/categories/presentation/widgets/category_widget.dart';
-import 'package:flashcards/features/home/cubit/statistics_cubit.dart';
-import 'package:flashcards/features/home/cubit/statistics_state.dart';
 import 'package:flashcards/features/tabs/presentation/screens/tabs_screen.dart';
-import 'package:flashcards/shared/domain/entities/card_category.dart';
+import 'package:flashcards/shared/cubit/status_overview_cubit.dart';
 import 'package:flashcards/shared/widgets/action_button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -29,11 +27,8 @@ class CategoriesScreen extends StatelessWidget {
       ),
       body: Stack(
         children: [
-          BlocBuilder<StatisticsCubit, StatisticsState>(
-            buildWhen: (prev, curr) => prev.currentCounts != curr.currentCounts,
+          BlocBuilder<StatusOverviewCubit, StatusOverviewState>(
             builder: (context, state) {
-              int val(CardCategory c) => state.currentCounts[c] ?? 0;
-
               return Padding(
                 padding: EdgeInsets.all(padM),
                 child: Column(
@@ -41,25 +36,25 @@ class CategoriesScreen extends StatelessWidget {
                   children: [
                     CategoryWidget(
                       label: 'New words',
-                      count: val(CardCategory.newWords),
+                      count: state.newWords,
                       caption: '- For every day practice',
                       onTap: () {},
                     ),
                     CategoryWidget(
                       label: 'Learning',
-                      count: val(CardCategory.learning),
+                      count: state.learning,
                       caption: '- For reviewing every other day',
                       onTap: () {},
                     ),
                     CategoryWidget(
                       label: 'Reviewing',
-                      count: val(CardCategory.reviewing),
+                      count: state.reviewing,
                       caption: '- For once a week refresh',
                       onTap: () {},
                     ),
                     CategoryWidget(
                       label: 'Mastered',
-                      count: val(CardCategory.mastered),
+                      count: state.mastered,
                       caption: '- For occasionally repeating to retain',
                       onTap: () {},
                     ),

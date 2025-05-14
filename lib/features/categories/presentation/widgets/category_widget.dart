@@ -1,5 +1,7 @@
 import 'package:confetti/confetti.dart';
 import 'package:flashcards/core/extensions/context_extensions.dart';
+import 'package:flashcards/features/home/presentation/widgets/timed_count_up.dart';
+import 'package:flashcards/shared/cubit/status_overview_cubit.dart';
 import 'package:flashcards/shared/widgets/celebration_confetti_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -13,7 +15,7 @@ class CategoryWidget extends StatefulWidget {
   });
 
   final String label;
-  final int count;
+  final StatusItem count;
   final String caption;
   final VoidCallback onTap;
 
@@ -23,13 +25,15 @@ class CategoryWidget extends StatefulWidget {
 
 class _CategoryWidgetState extends State<CategoryWidget> {
   late final ConfettiController _confettiCtrl;
-  late int _prevCount;
+  bool _animate = false;
 
   @override
   void initState() {
     super.initState();
     _confettiCtrl = ConfettiController(duration: const Duration(seconds: 3));
-    _prevCount = widget.count;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      setState(() => _animate = true);
+    });
   }
 
   @override
@@ -37,15 +41,16 @@ class _CategoryWidgetState extends State<CategoryWidget> {
     super.didUpdateWidget(oldWidget);
 
     final bool isNewWords = widget.label == 'New words';
-    final justUnlocked = !isNewWords && _prevCount == 0 && widget.count > 0;
+    final justUnlocked =
+        !isNewWords &&
+        int.parse('${widget.count.from}') == 0 &&
+        int.parse('${widget.count.to}') > 0;
 
     if (justUnlocked) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        Future.delayed(const Duration(seconds: 5), _confettiCtrl.play);
+        Future.delayed(const Duration(seconds: 2), _confettiCtrl.play);
       });
     }
-
-    _prevCount = widget.count;
   }
 
   @override
@@ -61,15 +66,12 @@ class _CategoryWidgetState extends State<CategoryWidget> {
     final padXS = context.paddingXS;
     final cs = Theme.of(context).colorScheme;
 
-    final bool locked = widget.count == 0;
+    final bool locked = widget.count.to == 0;
     final bool newWords = widget.label == 'New words';
 
     Widget buildRight() {
       if (!locked) {
-        return Text(
-          '${widget.count}',
-          style: context.bodyStyle.copyWith(color: cs.onPrimaryContainer),
-        );
+        return _StatItem(item: widget.count, shouldAnimate: _animate);
       }
       if (newWords) {
         return Text(
@@ -132,6 +134,26 @@ class _CategoryWidgetState extends State<CategoryWidget> {
             ),
         ],
       ),
+    );
+  }
+}
+
+class _StatItem extends StatelessWidget {
+  const _StatItem({required this.item, required this.shouldAnimate});
+
+  final StatusItem item;
+  final bool shouldAnimate;
+
+  @override
+  Widget build(BuildContext context) {
+    if (!shouldAnimate) {
+      return Text('${item.to}');
+    }
+    return TimedCountUp(
+      key: ValueKey(item.to),
+      start: item.from,
+      end: item.to,
+      totalDuration: const Duration(seconds: 5),
     );
   }
 }
