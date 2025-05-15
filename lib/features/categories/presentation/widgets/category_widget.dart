@@ -72,15 +72,7 @@ class _CategoryWidgetState extends State<CategoryWidget>
   void didUpdateWidget(covariant CategoryWidget oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.label != 'New words') {
-      final unlockCubit = context.read<CategoryUnlockCubit>();
-      final justUnlocked =
-          !unlockCubit.state.isUnlocked &&
-          oldWidget.count.to == 0 &&
-          widget.count.to > 0;
-
-      if (justUnlocked) {
-        unlockCubit.unlock();
-      }
+      context.read<CategoryUnlockCubit>().unlock(widget.count);
     }
   }
 
@@ -90,6 +82,9 @@ class _CategoryWidgetState extends State<CategoryWidget>
     final padS = context.paddingS;
     final padXS = context.paddingXS;
     final cs = Theme.of(context).colorScheme;
+
+    final unlockState = context.watch<CategoryUnlockCubit>().state;
+    final isLocked = !unlockState.isUnlocked;
 
     if (widget.label == 'New words') {
       return SizedBox(
@@ -157,7 +152,7 @@ class _CategoryWidgetState extends State<CategoryWidget>
               elevation: 6,
               color: cs.primaryContainer,
               child: InkWell(
-                onTap: _isLocked(context) ? null : widget.onTap,
+                onTap: isLocked ? null : widget.onTap,
                 child: Padding(
                   padding: EdgeInsets.all(padS),
                   child: Column(
@@ -173,12 +168,12 @@ class _CategoryWidgetState extends State<CategoryWidget>
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          _buildRight(context),
+                          _buildRight(isLocked),
                         ],
                       ),
                       SizedBox(height: padXS),
                       Text(
-                        _buildCaption(context),
+                        _buildCaption(isLocked),
                         style: context.captionStyle.copyWith(
                           color: cs.onPrimaryContainer,
                         ),
@@ -198,20 +193,11 @@ class _CategoryWidgetState extends State<CategoryWidget>
     );
   }
 
-  bool _isLocked(BuildContext context) {
-    final unlockCubit = context.watch<CategoryUnlockCubit>();
-    return !unlockCubit.state.isUnlocked;
-  }
-
-  Widget _buildRight(BuildContext context) {
+  Widget _buildRight(bool isLocked) {
     final cs = Theme.of(context).colorScheme;
-    final unlockCubit = context.watch<CategoryUnlockCubit>();
-    final locked = !unlockCubit.state.isUnlocked;
-
-    if (locked) {
+    if (isLocked) {
       return Icon(Icons.lock, color: cs.onPrimaryContainer);
     }
-
     return Stack(
       alignment: Alignment.center,
       children: [
@@ -227,10 +213,8 @@ class _CategoryWidgetState extends State<CategoryWidget>
     );
   }
 
-  String _buildCaption(BuildContext context) {
-    final unlockCubit = context.watch<CategoryUnlockCubit>();
-    final locked = !unlockCubit.state.isUnlocked;
-    if (!locked) return widget.caption;
+  String _buildCaption(bool isLocked) {
+    if (!isLocked) return widget.caption;
     return '- Keep learning to unlock';
   }
 }

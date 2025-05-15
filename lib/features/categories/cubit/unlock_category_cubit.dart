@@ -1,3 +1,4 @@
+import 'package:flashcards/shared/cubit/status_overview_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class UnlockState {
@@ -9,7 +10,9 @@ class CategoryUnlockCubit extends Cubit<UnlockState> {
   CategoryUnlockCubit({bool initiallyUnlocked = false})
     : super(UnlockState(isUnlocked: initiallyUnlocked));
 
-  void unlock() {
-    if (!state.isUnlocked) emit(const UnlockState(isUnlocked: true));
+  void unlock(StatusItem count) {
+    if (!state.isUnlocked && count.from == 0 && count.to > 0) {
+      emit(const UnlockState(isUnlocked: true));
+    }
   }
 }
