@@ -1,10 +1,12 @@
 import 'package:confetti/confetti.dart';
 import 'package:flashcards/core/extensions/context_extensions.dart';
+import 'package:flashcards/features/categories/cubit/unlock_category_cubit.dart';
 import 'package:flashcards/features/categories/presentation/widgets/lock_widget.dart';
 import 'package:flashcards/features/home/presentation/widgets/timed_count_up.dart';
 import 'package:flashcards/shared/cubit/status_overview_cubit.dart';
 import 'package:flashcards/shared/widgets/celebration_confetti_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CategoryWidget extends StatefulWidget {
   const CategoryWidget({
@@ -28,9 +30,10 @@ class _CategoryWidgetState extends State<CategoryWidget>
     with TickerProviderStateMixin {
   late final ConfettiController _confettiCtrl;
   late final AnimationController _lockController;
-  late final Animation<double> _fadeAnim;
   late final AnimationController _fadeController;
-  bool _animate = false;
+  late final Animation<double> _fadeAnim;
+
+  bool _wasUnlocked = false;
 
   @override
   void initState() {
@@ -45,27 +48,6 @@ class _CategoryWidgetState extends State<CategoryWidget>
     );
     _fadeAnim = Tween<double>(begin: 1.0, end: 0.0).animate(_fadeController);
     _confettiCtrl = ConfettiController(duration: const Duration(seconds: 3));
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      setState(() => _animate = true);
-    });
-  }
-
-  @override
-  void didUpdateWidget(covariant CategoryWidget oldWidget) {
-    super.didUpdateWidget(oldWidget);
-
-    final bool isNewWords = widget.label == 'New words';
-    final justUnlocked =
-        !isNewWords &&
-        int.parse('${widget.count.from}') == 0 &&
-        int.parse('${widget.count.to}') > 0;
-
-    if (justUnlocked) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        _lockController.forward().whenComplete(() => _fadeController.forward());
-        Future.delayed(const Duration(seconds: 2), _confettiCtrl.play);
-      });
-    }
   }
 
   @override
@@ -76,6 +58,27 @@ class _CategoryWidgetState extends State<CategoryWidget>
     super.dispose();
   }
 
+  void _triggerUnlockAnimation() {
+    _lockController.forward().whenComplete(() => _fadeController.forward());
+    Future.delayed(const Duration(seconds: 2), _confettiCtrl.play);
+  }
+
+  @override
+  void didUpdateWidget(covariant CategoryWidget oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.label != 'New words') {
+      final unlockCubit = context.read<CategoryUnlockCubit>();
+      final justUnlocked =
+          !unlockCubit.state.isUnlocked &&
+          oldWidget.count.to == 0 &&
+          widget.count.to > 0;
+
+      if (justUnlocked) {
+        unlockCubit.unlock();
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final h = context.screenHeight;
@@ -83,86 +86,144 @@ class _CategoryWidgetState extends State<CategoryWidget>
     final padXS = context.paddingXS;
     final cs = Theme.of(context).colorScheme;
 
-    final bool newWords = widget.label == 'New words';
-    final locked = !newWords && widget.count.to == 0;
-
-    Widget buildRight() {
-      if (newWords) {
-        return _StatItem(item: widget.count, shouldAnimate: _animate);
-      }
-      if (locked) return Icon(Icons.lock, color: cs.onPrimaryContainer);
-
-      if (_animate) {
-        return Stack(
-          alignment: Alignment.center,
+    if (widget.label == 'New words') {
+      return SizedBox(
+        height: h * 0.12 < 88 ? 88 : h * 0.12,
+        child: Stack(
           children: [
-            _StatItem(item: widget.count, shouldAnimate: _animate),
-            FadeTransition(
-              opacity: _fadeAnim,
-              child: ShakingLock(
-                controller: _lockController,
-                shouldAnimate: _animate,
-              ),
-            ),
-          ],
-        );
-      }
-      return _StatItem(item: widget.count, shouldAnimate: _animate);
-    }
-
-    String buildCaption() {
-      if (!locked) return widget.caption;
-      return newWords ? '- Add new words' : '- Keep learning to unlock';
-    }
-
-    return SizedBox(
-      height: h * 0.12 < 88 ? 88 : h * 0.12,
-      child: Stack(
-        children: [
-          Card(
-            clipBehavior: Clip.antiAlias,
-            elevation: 6,
-            color: cs.primaryContainer,
-            child: InkWell(
-              onTap: locked ? null : widget.onTap,
-              child: Padding(
-                padding: EdgeInsets.all(padS),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          widget.label,
-                          style: context.bodyStyle.copyWith(
-                            color: cs.onPrimaryContainer,
-                            fontWeight: FontWeight.bold,
+            Card(
+              clipBehavior: Clip.antiAlias,
+              elevation: 6,
+              color: cs.primaryContainer,
+              child: InkWell(
+                onTap: widget.onTap,
+                child: Padding(
+                  padding: EdgeInsets.all(padS),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            widget.label,
+                            style: context.bodyStyle.copyWith(
+                              color: cs.onPrimaryContainer,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                        ),
-                        buildRight(),
-                      ],
-                    ),
-                    SizedBox(height: padXS),
-                    Text(
-                      buildCaption(),
-                      style: context.captionStyle.copyWith(
-                        color: cs.onPrimaryContainer,
+                          _StatItem(item: widget.count, shouldAnimate: true),
+                        ],
                       ),
-                    ),
-                  ],
+                      SizedBox(height: padXS),
+                      Text(
+                        '- Add new words',
+                        style: context.captionStyle.copyWith(
+                          color: cs.onPrimaryContainer,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-          if (widget.label != 'New words')
+          ],
+        ),
+      );
+    }
+
+    return BlocListener<CategoryUnlockCubit, UnlockState>(
+      listenWhen: (prev, curr) => !prev.isUnlocked && curr.isUnlocked,
+      listener: (context, state) {
+        if (!_wasUnlocked && state.isUnlocked) {
+          _wasUnlocked = true;
+          _triggerUnlockAnimation();
+        }
+      },
+      child: SizedBox(
+        height: h * 0.12 < 88 ? 88 : h * 0.12,
+        child: Stack(
+          children: [
+            Card(
+              clipBehavior: Clip.antiAlias,
+              elevation: 6,
+              color: cs.primaryContainer,
+              child: InkWell(
+                onTap: _isLocked(context) ? null : widget.onTap,
+                child: Padding(
+                  padding: EdgeInsets.all(padS),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            widget.label,
+                            style: context.bodyStyle.copyWith(
+                              color: cs.onPrimaryContainer,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          _buildRight(context),
+                        ],
+                      ),
+                      SizedBox(height: padXS),
+                      Text(
+                        _buildCaption(context),
+                        style: context.captionStyle.copyWith(
+                          color: cs.onPrimaryContainer,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
             CelebrationConfetti(
               controller: _confettiCtrl,
               alignment: Alignment.topRight,
             ),
-        ],
+          ],
+        ),
       ),
     );
+  }
+
+  bool _isLocked(BuildContext context) {
+    final unlockCubit = context.watch<CategoryUnlockCubit>();
+    return !unlockCubit.state.isUnlocked;
+  }
+
+  Widget _buildRight(BuildContext context) {
+    final cs = Theme.of(context).colorScheme;
+    final unlockCubit = context.watch<CategoryUnlockCubit>();
+    final locked = !unlockCubit.state.isUnlocked;
+
+    if (locked) {
+      return Icon(Icons.lock, color: cs.onPrimaryContainer);
+    }
+
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        _StatItem(item: widget.count, shouldAnimate: true),
+        FadeTransition(
+          opacity: _fadeAnim,
+          child: ShakingLock(
+            controller: _lockController,
+            shouldAnimate: _wasUnlocked,
+          ),
+        ),
+      ],
+    );
+  }
+
+  String _buildCaption(BuildContext context) {
+    final unlockCubit = context.watch<CategoryUnlockCubit>();
+    final locked = !unlockCubit.state.isUnlocked;
+    if (!locked) return widget.caption;
+    return '- Keep learning to unlock';
   }
 }
 

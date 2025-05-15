@@ -1,5 +1,6 @@
 import 'package:flashcards/core/extensions/context_extensions.dart';
 import 'package:flashcards/core/theme/app_colors.dart';
+import 'package:flashcards/features/categories/cubit/unlock_category_cubit.dart';
 import 'package:flashcards/features/categories/presentation/widgets/category_widget.dart';
 import 'package:flashcards/features/tabs/presentation/screens/tabs_screen.dart';
 import 'package:flashcards/shared/cubit/status_overview_cubit.dart';
@@ -40,23 +41,41 @@ class CategoriesScreen extends StatelessWidget {
                       caption: '- For every day practice',
                       onTap: () {},
                     ),
-                    CategoryWidget(
-                      label: 'Learning',
-                      count: state.learning,
-                      caption: '- For reviewing every other day',
-                      onTap: () {},
+                    BlocProvider(
+                      create:
+                          (_) => CategoryUnlockCubit(
+                            initiallyUnlocked: state.learning.to > 0,
+                          ),
+                      child: CategoryWidget(
+                        label: 'Learning',
+                        count: state.learning,
+                        caption: '- For reviewing every other day',
+                        onTap: () {},
+                      ),
                     ),
-                    CategoryWidget(
-                      label: 'Reviewing',
-                      count: state.reviewing,
-                      caption: '- For once a week refresh',
-                      onTap: () {},
+                    BlocProvider(
+                      create:
+                          (_) => CategoryUnlockCubit(
+                            initiallyUnlocked: state.reviewing.to > 0,
+                          ),
+                      child: CategoryWidget(
+                        label: 'Reviewing',
+                        count: state.reviewing,
+                        caption: '- For once a week refresh',
+                        onTap: () {},
+                      ),
                     ),
-                    CategoryWidget(
-                      label: 'Mastered',
-                      count: state.mastered,
-                      caption: '- For occasionally repeating to retain',
-                      onTap: () {},
+                    BlocProvider(
+                      create:
+                          (_) => CategoryUnlockCubit(
+                            initiallyUnlocked: state.mastered.to > 0,
+                          ),
+                      child: CategoryWidget(
+                        label: 'Mastered',
+                        count: state.mastered,
+                        caption: '- For occasionally repeating to retain',
+                        onTap: () {},
+                      ),
                     ),
                   ],
                 ),
