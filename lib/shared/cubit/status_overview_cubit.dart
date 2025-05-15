@@ -1,6 +1,7 @@
+import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class StatusItem {
+class StatusItem extends Equatable {
   final int from;
   final int to;
 
@@ -11,9 +12,12 @@ class StatusItem {
   StatusItem update(int next) => StatusItem(from: to, to: next);
 
   factory StatusItem.zero() => const StatusItem(from: 0, to: 0);
+
+  @override
+  List<Object?> get props => [from, to];
 }
 
-class StatusOverviewState {
+class StatusOverviewState extends Equatable {
   final StatusItem newWords;
   final StatusItem learning;
   final StatusItem reviewing;
@@ -44,6 +48,9 @@ class StatusOverviewState {
     reviewing: reviewing ?? this.reviewing,
     mastered: mastered ?? this.mastered,
   );
+
+  @override
+  List<Object?> get props => [newWords, learning, reviewing, mastered];
 }
 
 class StatusOverviewCubit extends Cubit<StatusOverviewState> {
