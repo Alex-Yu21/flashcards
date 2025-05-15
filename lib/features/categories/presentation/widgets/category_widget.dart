@@ -34,6 +34,7 @@ class _CategoryWidgetState extends State<CategoryWidget>
   late final Animation<double> _fadeAnim;
 
   bool _wasUnlocked = false;
+  bool _animate = false;
 
   @override
   void initState() {
@@ -48,6 +49,10 @@ class _CategoryWidgetState extends State<CategoryWidget>
     );
     _fadeAnim = Tween<double>(begin: 1.0, end: 0.0).animate(_fadeController);
     _confettiCtrl = ConfettiController(duration: const Duration(seconds: 3));
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) setState(() => _animate = true);
+    });
   }
 
   @override
@@ -112,7 +117,10 @@ class _CategoryWidgetState extends State<CategoryWidget>
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          _StatItem(item: widget.count, shouldAnimate: true),
+                          _StatItem(
+                            item: widget.count,
+                            shouldAnimate: _animate,
+                          ),
                         ],
                       ),
                       SizedBox(height: padXS),
@@ -207,7 +215,7 @@ class _CategoryWidgetState extends State<CategoryWidget>
     return Stack(
       alignment: Alignment.center,
       children: [
-        _StatItem(item: widget.count, shouldAnimate: true),
+        _StatItem(item: widget.count, shouldAnimate: _animate),
         FadeTransition(
           opacity: _fadeAnim,
           child: ShakingLock(
