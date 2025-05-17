@@ -1,5 +1,5 @@
 import 'package:bloc_test/bloc_test.dart';
-import 'package:flashcards/shared/cubit/status_overview_cubit.dart';
+import 'package:flashcards/presentation/cubit/status_overview_cubit.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

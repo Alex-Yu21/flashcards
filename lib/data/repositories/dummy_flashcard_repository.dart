@@ -1,5 +1,5 @@
-import 'package:flashcards/shared/domain/entities/flashcard.dart';
-import 'package:flashcards/shared/domain/repositories/flashcard_repository.dart';
+import 'package:flashcards/domain/entities/flashcard.dart';
+import 'package:flashcards/domain/repositories/flashcard_repository.dart';
 
 class DummyFlashcardRepository implements FlashcardRepository {
   final List<Flashcard> _data;
