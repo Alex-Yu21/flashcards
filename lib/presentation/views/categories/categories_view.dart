@@ -2,14 +2,14 @@ import 'package:flashcards/core/extensions/context_extensions.dart';
 import 'package:flashcards/core/theme/app_colors.dart';
 import 'package:flashcards/presentation/cubit/status_overview_cubit.dart';
 import 'package:flashcards/presentation/cubit/unlock_category_cubit.dart';
-import 'package:flashcards/presentation/screens/tabs_screen.dart';
+import 'package:flashcards/presentation/views/categories/widgets/category_widget.dart';
+import 'package:flashcards/presentation/views/tabs/tabs_view.dart';
 import 'package:flashcards/presentation/widgets/action_button_widget.dart';
-import 'package:flashcards/presentation/widgets/category_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class CategoriesScreen extends StatelessWidget {
-  const CategoriesScreen({super.key});
+class CategoriesView extends StatelessWidget {
+  const CategoriesView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class CategoriesScreen extends StatelessWidget {
         backgroundColor: Colors.grey.withAlpha((0.2 * 255).round()),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
-          onPressed: () => TabsScreen.of(context)?.switchTo(0),
+          onPressed: () => TabView.of(context)?.switchTo(0),
         ),
         title: const Text('Categories'),
         centerTitle: true,

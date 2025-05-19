@@ -1,22 +1,22 @@
-import 'package:flashcards/presentation/screens/categories_screen.dart';
-import 'package:flashcards/presentation/screens/home_screen.dart';
-import 'package:flashcards/presentation/widgets/app_nav_bar.dart';
+import 'package:flashcards/presentation/views/categories/categories_view.dart';
+import 'package:flashcards/presentation/views/home/home_view.dart';
+import 'package:flashcards/presentation/views/tabs/widgets/app_nav_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 const _barHeight = kBottomNavigationBarHeight;
 
-class TabsScreen extends StatefulWidget {
-  const TabsScreen({super.key});
+class TabView extends StatefulWidget {
+  const TabView({super.key});
 
   static TabsScreenState? of(BuildContext context) =>
       context.findAncestorStateOfType<TabsScreenState>();
 
   @override
-  State<TabsScreen> createState() => TabsScreenState();
+  State<TabView> createState() => TabsScreenState();
 }
 
-class TabsScreenState extends State<TabsScreen> {
+class TabsScreenState extends State<TabView> {
   int _current = 0;
   void switchTo(int index) => setState(() => _current = index);
   late final List<GlobalKey<NavigatorState>> _navKeys;
@@ -29,8 +29,8 @@ class TabsScreenState extends State<TabsScreen> {
     _navKeys = List.generate(4, (_) => GlobalKey<NavigatorState>());
     _tabHasInnerRoute = List.filled(4, false);
     _rootPages = const [
-      HomeScreen(),
-      CategoriesScreen(),
+      HomeView(),
+      CategoriesView(),
       CollectionsScreen(),
       SettingsScreen(),
     ];

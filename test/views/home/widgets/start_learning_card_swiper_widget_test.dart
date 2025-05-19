@@ -1,5 +1,5 @@
+import 'package:flashcards/presentation/views/home/widgets/start_learning_card_swiper_widget.dart';
 import 'package:flashcards/presentation/widgets/flashcard_widget.dart';
-import 'package:flashcards/presentation/widgets/start_learning_card_swiper_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:flutter_test/flutter_test.dart';

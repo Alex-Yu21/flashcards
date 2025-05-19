@@ -4,15 +4,15 @@ import 'package:flashcards/domain/repositories/flashcard_repository.dart';
 import 'package:flashcards/presentation/cubit/statistics_cubit.dart';
 import 'package:flashcards/presentation/cubit/statistics_state.dart';
 import 'package:flashcards/presentation/cubit/status_overview_cubit.dart';
-import 'package:flashcards/presentation/screens/learning_screen.dart';
-import 'package:flashcards/presentation/widgets/progress_bar_widget.dart';
-import 'package:flashcards/presentation/widgets/start_learning_card_swiper_widget.dart';
-import 'package:flashcards/presentation/widgets/status_overview_widget.dart';
+import 'package:flashcards/presentation/views/home/widgets/progress_bar_widget.dart';
+import 'package:flashcards/presentation/views/home/widgets/start_learning_card_swiper_widget.dart';
+import 'package:flashcards/presentation/views/home/widgets/status_overview_widget.dart';
+import 'package:flashcards/presentation/views/learning/learning_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+class HomeView extends StatelessWidget {
+  const HomeView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -134,7 +134,7 @@ class HomeScreen extends StatelessWidget {
       _bottomUpRoute(
         RepositoryProvider.value(
           value: context.read<FlashcardRepository>(),
-          child: const LearningScreen(),
+          child: const LearningView(),
         ),
       ),
     );

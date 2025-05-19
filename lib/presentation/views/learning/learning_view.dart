@@ -3,23 +3,23 @@ import 'package:flashcards/domain/entities/flashcard.dart';
 import 'package:flashcards/domain/repositories/flashcard_repository.dart';
 import 'package:flashcards/presentation/cubit/flashcard_cubit.dart';
 import 'package:flashcards/presentation/cubit/flashcard_state.dart';
-import 'package:flashcards/presentation/widgets/answer_buttons.dart';
-import 'package:flashcards/presentation/widgets/flashcard_swiper.dart';
-import 'package:flashcards/presentation/widgets/progress_line_widget.dart';
-import 'package:flashcards/presentation/widgets/undo_buttons.dart';
+import 'package:flashcards/presentation/views/learning/widgets/answer_buttons.dart';
+import 'package:flashcards/presentation/views/learning/widgets/flashcard_swiper.dart';
+import 'package:flashcards/presentation/views/learning/widgets/progress_line_widget.dart';
+import 'package:flashcards/presentation/views/learning/widgets/undo_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:flutter_flip_card/controllers/flip_card_controllers.dart';
 
-class LearningScreen extends StatefulWidget {
-  const LearningScreen({super.key});
+class LearningView extends StatefulWidget {
+  const LearningView({super.key});
 
   @override
-  State<LearningScreen> createState() => _LearningScreenState();
+  State<LearningView> createState() => _LearningScreenState();
 }
 
-class _LearningScreenState extends State<LearningScreen> {
+class _LearningScreenState extends State<LearningView> {
   late final FlashcardCubit _cubit;
   late final CardSwiperController _swiperCtrl;
   List<FlipCardController> _flipCtrls = [];
