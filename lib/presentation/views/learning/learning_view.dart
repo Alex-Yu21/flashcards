@@ -1,8 +1,8 @@
 import 'package:flashcards/core/extensions/context_extensions.dart';
 import 'package:flashcards/domain/entities/flashcard.dart';
 import 'package:flashcards/domain/repositories/flashcard_repository.dart';
-import 'package:flashcards/presentation/cubit/flashcard_cubit.dart';
-import 'package:flashcards/presentation/cubit/flashcard_state.dart';
+import 'package:flashcards/presentation/cubit/flashcard/flashcard_cubit.dart';
+import 'package:flashcards/presentation/cubit/flashcard/flashcard_state.dart';
 import 'package:flashcards/presentation/views/learning/widgets/answer_buttons.dart';
 import 'package:flashcards/presentation/views/learning/widgets/flashcard_swiper.dart';
 import 'package:flashcards/presentation/views/learning/widgets/progress_line_widget.dart';

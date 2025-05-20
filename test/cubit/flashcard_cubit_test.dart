@@ -2,8 +2,8 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:flashcards/domain/entities/card_category.dart';
 import 'package:flashcards/domain/entities/flashcard.dart';
 import 'package:flashcards/domain/repositories/flashcard_repository.dart';
-import 'package:flashcards/presentation/cubit/flashcard_cubit.dart';
-import 'package:flashcards/presentation/cubit/flashcard_state.dart';
+import 'package:flashcards/presentation/cubit/flashcard/flashcard_cubit.dart';
+import 'package:flashcards/presentation/cubit/flashcard/flashcard_state.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 class _MemoryRepo implements FlashcardRepository {

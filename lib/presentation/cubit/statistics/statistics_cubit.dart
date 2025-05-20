@@ -1,7 +1,7 @@
 import 'package:flashcards/domain/entities/card_category.dart';
 import 'package:flashcards/domain/entities/flashcard.dart';
 import 'package:flashcards/domain/repositories/flashcard_repository.dart';
-import 'package:flashcards/presentation/cubit/statistics_state.dart';
+import 'package:flashcards/presentation/cubit/statistics/statistics_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class StatisticsCubit extends Cubit<StatisticsState> {

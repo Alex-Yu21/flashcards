@@ -4,7 +4,7 @@ import 'package:flashcards/core/theme/app_theme.dart';
 import 'package:flashcards/data/dummy_data.dart';
 import 'package:flashcards/data/repositories/dummy_flashcard_repository.dart';
 import 'package:flashcards/domain/repositories/flashcard_repository.dart';
-import 'package:flashcards/presentation/cubit/statistics_cubit.dart';
+import 'package:flashcards/presentation/cubit/statistics/statistics_cubit.dart';
 import 'package:flashcards/presentation/cubit/status_overview_cubit.dart';
 import 'package:flashcards/presentation/cubit/unlock_category_cubit.dart';
 import 'package:flashcards/presentation/views/tabs/tabs_view.dart';

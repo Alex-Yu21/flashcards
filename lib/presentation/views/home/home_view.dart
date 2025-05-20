@@ -1,8 +1,8 @@
 import 'package:flashcards/core/extensions/context_extensions.dart';
 import 'package:flashcards/domain/entities/card_category.dart';
 import 'package:flashcards/domain/repositories/flashcard_repository.dart';
-import 'package:flashcards/presentation/cubit/statistics_cubit.dart';
-import 'package:flashcards/presentation/cubit/statistics_state.dart';
+import 'package:flashcards/presentation/cubit/statistics/statistics_cubit.dart';
+import 'package:flashcards/presentation/cubit/statistics/statistics_state.dart';
 import 'package:flashcards/presentation/cubit/status_overview_cubit.dart';
 import 'package:flashcards/presentation/views/home/widgets/progress_bar_widget.dart';
 import 'package:flashcards/presentation/views/home/widgets/start_learning_card_swiper_widget.dart';
