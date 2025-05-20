@@ -67,7 +67,7 @@ class FlashcardWidget extends StatelessWidget {
         ),
         const SizedBox(height: 12),
         Text(
-          flashcard.hint.toLowerCase(),
+          flashcard.description.toLowerCase(),
           style: context.bodyStyle.copyWith(color: txColor),
         ),
       ],
@@ -93,7 +93,7 @@ class FlashcardWidget extends StatelessWidget {
         ),
         const SizedBox(height: 12),
         Text(
-          flashcard.description.toLowerCase(),
+          flashcard.example.toLowerCase(),
           style: context.bodyStyle.copyWith(color: txColor),
         ),
         const Spacer(),

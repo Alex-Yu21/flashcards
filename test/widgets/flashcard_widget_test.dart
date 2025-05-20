@@ -11,7 +11,7 @@ void main() {
     audioPath: null,
     description: 'greeting',
     translation: 'привет',
-    hint: 'He said hello.',
+    example: 'He said hello.',
   );
 
   testWidgets('shoud display the face side of a card', (

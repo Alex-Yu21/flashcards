@@ -6,7 +6,7 @@ class Flashcard {
     required this.title,
     required this.transcription,
     this.audioPath,
-    required this.hint,
+    required this.example,
     required this.translation,
     required this.description,
     this.category = CardCategory.newWords,
@@ -16,8 +16,8 @@ class Flashcard {
   final String title;
   final String transcription;
   final String? audioPath;
-  final String hint;
-  final String translation;
   final String description;
+  final String translation;
+  final String example;
   CardCategory category;
 }

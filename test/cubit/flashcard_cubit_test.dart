@@ -32,7 +32,7 @@ void main() {
             translation: 'привет',
             description: 'italian hello',
             transcription: '',
-            hint: '',
+            example: '',
             category: CardCategory.defaultCat,
           ),
         ]);
@@ -64,7 +64,7 @@ void main() {
             translation: 'яблоко',
             description: 'fruit',
             transcription: '',
-            hint: '',
+            example: '',
             category: CardCategory.newWords,
           ),
         ]);

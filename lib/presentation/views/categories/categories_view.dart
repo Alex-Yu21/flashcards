@@ -2,6 +2,7 @@ import 'package:flashcards/core/extensions/context_extensions.dart';
 import 'package:flashcards/core/theme/app_colors.dart';
 import 'package:flashcards/presentation/cubit/status_overview_cubit.dart';
 import 'package:flashcards/presentation/cubit/unlock_category_cubit.dart';
+import 'package:flashcards/presentation/views/add_new_card/add_new_card_view.dart';
 import 'package:flashcards/presentation/views/categories/widgets/category_widget.dart';
 import 'package:flashcards/presentation/views/tabs/tabs_view.dart';
 import 'package:flashcards/presentation/widgets/action_button_widget.dart';
@@ -87,7 +88,13 @@ class CategoriesView extends StatelessWidget {
             left: 0,
             right: 0,
             child: ActionButtonWidget(
-              onTap: () {},
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const AddNewCardView(),
+                  ),
+                );
+              },
               icon: Icons.add,
               color: AppColors.tertiary50,
             ),

@@ -36,6 +36,12 @@ class FlashcardCubit extends Cubit<FlashcardState> {
           : FlashcardsLoaded(List.unmodifiable(_cards)),
     );
   }
+
+  void addFlashcard(Flashcard card) async {
+    await _repo.saveFlashcard(card);
+    _cards.add(card);
+    emit(FlashcardsLoaded(List.unmodifiable(_cards)));
+  }
 }
 
 extension FlashcardCopy on Flashcard {
@@ -45,7 +51,7 @@ extension FlashcardCopy on Flashcard {
     transcription: transcription,
     translation: translation,
     description: description,
-    hint: hint,
+    example: example,
     audioPath: audioPath,
     category: category ?? this.category,
   );
