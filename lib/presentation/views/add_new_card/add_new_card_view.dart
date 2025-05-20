@@ -33,38 +33,34 @@ class _AddNewCardViewState extends State<AddNewCardView> {
 
   @override
   Widget build(BuildContext context) {
+    final Color kBgColor = Colors.grey.withAlpha((0.2 * 255).round());
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.grey.withAlpha((0.2 * 255).round()),
-      ),
+      appBar: AppBar(backgroundColor: kBgColor),
       body: Container(
-        padding: EdgeInsets.all(context.paddingS),
-        color: Colors.grey.withAlpha((0.2 * 255).round()),
+        color: kBgColor,
         width: double.infinity,
         height: context.screenHeight,
-        child: Column(
-          children: [
-            Expanded(
-              child: ListView(
-                children: [
-                  NewCardWidget(
-                    wordCtrl: _wordCtrl,
-                    transcrCtrl: _transcrCtrl,
-                    translationCtrl: _translationCtrl,
-                    descriptionCtrl: _descriptionCtrl,
-                    exampleCtrl: _exampleCtrl,
-                  ),
-                  SizedBox(height: context.paddingS),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: ActionButtonWidget(
-                          icon: Icons.add,
-                          onTap: () {},
-                        ),
-                      ),
-                      Expanded(
-                        child: ActionButtonWidget(
+        child: Padding(
+          padding: EdgeInsets.all(context.paddingS),
+          child: Column(
+            children: [
+              Expanded(
+                child: ListView(
+                  children: [
+                    NewCardWidget(
+                      wordCtrl: _wordCtrl,
+                      transcrCtrl: _transcrCtrl,
+                      translationCtrl: _translationCtrl,
+                      descriptionCtrl: _descriptionCtrl,
+                      exampleCtrl: _exampleCtrl,
+                    ),
+                    SizedBox(height: context.paddingS),
+                    Row(
+                      children: [
+                        SizedBox(width: context.paddingXS),
+                        ActionButtonWidget(icon: Icons.add, onTap: () {}),
+                        const Spacer(),
+                        ActionButtonWidget(
                           icon: Icons.done,
                           color: AppColors.yes2,
                           onTap: () {
@@ -84,13 +80,14 @@ class _AddNewCardViewState extends State<AddNewCardView> {
                             Navigator.of(context).pop();
                           },
                         ),
-                      ),
-                    ],
-                  ),
-                ],
+                        SizedBox(width: context.paddingXS),
+                      ],
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -138,12 +135,12 @@ class NewCardWidget extends StatelessWidget {
                 ],
               ),
             ),
-            _Field(controller: wordCtrl, label: 'word'),
-            _Field(controller: transcrCtrl, label: 'transcription'),
-            _Field(controller: descriptionCtrl, label: 'description'),
+            Field(controller: wordCtrl, label: 'word'),
+            Field(controller: transcrCtrl, label: 'transcription'),
+            Field(controller: descriptionCtrl, label: 'description'),
             Text('BACK SIDE', style: context.bodyStyle),
-            _Field(controller: translationCtrl, label: 'translation'),
-            _Field(
+            Field(controller: translationCtrl, label: 'translation'),
+            Field(
               controller: exampleCtrl,
               label: 'Example sentence',
               maxLines: 2,
@@ -155,8 +152,9 @@ class NewCardWidget extends StatelessWidget {
   }
 }
 
-class _Field extends StatelessWidget {
-  const _Field({
+class Field extends StatelessWidget {
+  const Field({
+    super.key,
     required this.controller,
     required this.label,
     this.maxLines = 1,
