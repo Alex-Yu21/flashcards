@@ -20,7 +20,7 @@ class AddCardCubit extends Cubit<AddCardState> {
             ? state as AddCardEditing
             : const AddCardEditing.empty();
 
-    final next = prev.copyWithField(id, value);
+    final next = prev.copyWithField(id, value).copyWith(showErrors: false);
 
     final errs = {
       FieldId.word: _req(next.word),
@@ -31,23 +31,28 @@ class AddCardCubit extends Cubit<AddCardState> {
   }
 
   Future<void> save() async {
-    final s =
+    final current =
         state is AddCardEditing
             ? state as AddCardEditing
             : const AddCardEditing.empty();
+    final errs = {
+      FieldId.word: _req(current.word),
+      FieldId.translation: _req(current.translation),
+    };
+    final valid = errs.values.every((e) => e == null);
 
-    if (!s.canSubmit) {
-      emit(s);
+    if (!valid) {
+      emit(current.copyWith(errors: errs, showErrors: true, canSubmit: false));
       return;
     }
 
     final card = Flashcard(
       id: _uuid.v4(),
-      title: s.word.trim(),
-      transcription: s.transcription.trim(),
-      translation: s.translation.trim(),
-      description: s.description.trim(),
-      example: s.example.trim(),
+      title: current.word.trim(),
+      transcription: current.transcription.trim(),
+      translation: current.translation.trim(),
+      description: current.description.trim(),
+      example: current.example.trim(),
       audioPath: null,
       category: CardCategory.newWords,
     );

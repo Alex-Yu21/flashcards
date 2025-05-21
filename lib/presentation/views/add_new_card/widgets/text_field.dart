@@ -28,8 +28,10 @@ class Field extends StatelessWidget {
     return BlocBuilder<AddCardCubit, AddCardState>(
       buildWhen: (_, n) => n is AddCardEditing,
       builder: (context, state) {
-        final err = (state is AddCardEditing) ? state.errors[fieldId] : null;
-
+        String? err;
+        if (state is AddCardEditing && state.showErrors) {
+          err = state.errors[fieldId];
+        }
         return Padding(
           padding: EdgeInsets.only(bottom: context.paddingXS),
           child: TextFormField(

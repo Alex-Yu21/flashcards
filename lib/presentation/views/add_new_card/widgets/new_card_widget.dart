@@ -44,7 +44,7 @@ class NewCardWidget extends StatelessWidget {
                 ],
               ),
             ),
-            Field(controller: wordCtrl, label: 'word', fieldId: FieldId.word),
+            Field(controller: wordCtrl, label: 'word*', fieldId: FieldId.word),
             Field(
               controller: transcrCtrl,
               label: 'transcription',
@@ -58,7 +58,7 @@ class NewCardWidget extends StatelessWidget {
             Text('BACK SIDE', style: context.bodyStyle),
             Field(
               controller: translationCtrl,
-              label: 'translation',
+              label: 'translation*',
               fieldId: FieldId.translation,
             ),
             Field(

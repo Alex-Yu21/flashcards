@@ -13,6 +13,8 @@ extension CardCategoryPromote on CardCategory {
         return CardCategory.mastered;
       case CardCategory.defaultCat:
         return CardCategory.defaultCat;
+      default:
+        throw UnsupportedError('Unknown CardCategory');
     }
   }
 }

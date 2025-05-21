@@ -17,6 +17,7 @@ class AddCardEditing extends AddCardState {
     required this.example,
     required this.errors,
     required this.canSubmit,
+    required this.showErrors,
   });
 
   const AddCardEditing.empty()
@@ -28,6 +29,7 @@ class AddCardEditing extends AddCardState {
         example: '',
         errors: const {},
         canSubmit: false,
+        showErrors: false,
       );
 
   final String word;
@@ -37,6 +39,7 @@ class AddCardEditing extends AddCardState {
   final String example;
   final Map<FieldId, String?> errors;
   final bool canSubmit;
+  final bool showErrors;
 
   AddCardEditing copyWithField(FieldId id, String v) {
     switch (id) {
@@ -50,6 +53,8 @@ class AddCardEditing extends AddCardState {
         return copyWith(description: v);
       case FieldId.example:
         return copyWith(example: v);
+      default:
+        throw UnsupportedError('Unknown field $id');
     }
   }
 
@@ -64,6 +69,7 @@ class AddCardEditing extends AddCardState {
     String? example,
     Map<FieldId, String?>? errors,
     bool? canSubmit,
+    bool? showErrors,
   }) => AddCardEditing(
     word: word ?? this.word,
     transcription: transcription ?? this.transcription,
@@ -72,5 +78,6 @@ class AddCardEditing extends AddCardState {
     example: example ?? this.example,
     errors: errors ?? this.errors,
     canSubmit: canSubmit ?? this.canSubmit,
+    showErrors: showErrors ?? this.showErrors,
   );
 }
