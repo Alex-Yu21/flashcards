@@ -4,6 +4,7 @@ import 'package:flashcards/core/theme/app_theme.dart';
 import 'package:flashcards/data/dummy_data.dart';
 import 'package:flashcards/data/repositories/dummy_flashcard_repository.dart';
 import 'package:flashcards/domain/repositories/flashcard_repository.dart';
+import 'package:flashcards/presentation/cubit/flashcard/flashcard_cubit.dart';
 import 'package:flashcards/presentation/cubit/statistics/statistics_cubit.dart';
 import 'package:flashcards/presentation/cubit/status_overview_cubit.dart';
 import 'package:flashcards/presentation/cubit/unlock_category_cubit.dart';
@@ -30,6 +31,7 @@ void main() async {
               BlocProvider(create: (_) => StatisticsCubit(repo)..init()),
               BlocProvider(create: (_) => StatusOverviewCubit()),
               BlocProvider(create: (_) => CategoryUnlockCubit()),
+              BlocProvider(create: (_) => FlashcardCubit(repo)..init()),
             ],
             child: const FlashcardsApp(),
           ),

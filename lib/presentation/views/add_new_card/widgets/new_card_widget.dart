@@ -1,4 +1,5 @@
 import 'package:flashcards/core/extensions/context_extensions.dart';
+import 'package:flashcards/presentation/cubit/add_card/add_cart_state.dart';
 import 'package:flashcards/presentation/views/add_new_card/widgets/text_field.dart';
 import 'package:flutter/material.dart';
 
@@ -43,15 +44,28 @@ class NewCardWidget extends StatelessWidget {
                 ],
               ),
             ),
-            Field(controller: wordCtrl, label: 'word'),
-            Field(controller: transcrCtrl, label: 'transcription'),
-            Field(controller: descriptionCtrl, label: 'description'),
+            Field(controller: wordCtrl, label: 'word', fieldId: FieldId.word),
+            Field(
+              controller: transcrCtrl,
+              label: 'transcription',
+              fieldId: FieldId.transcription,
+            ),
+            Field(
+              controller: descriptionCtrl,
+              label: 'description',
+              fieldId: FieldId.description,
+            ),
             Text('BACK SIDE', style: context.bodyStyle),
-            Field(controller: translationCtrl, label: 'translation'),
+            Field(
+              controller: translationCtrl,
+              label: 'translation',
+              fieldId: FieldId.translation,
+            ),
             Field(
               controller: exampleCtrl,
               label: 'example sentence',
               maxLines: 2,
+              fieldId: FieldId.example,
             ),
           ],
         ),

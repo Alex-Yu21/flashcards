@@ -1,7 +1,7 @@
 import 'package:flashcards/core/extensions/context_extensions.dart';
 import 'package:flashcards/core/theme/app_colors.dart';
-import 'package:flashcards/domain/entities/card_category.dart';
-import 'package:flashcards/domain/entities/flashcard.dart';
+import 'package:flashcards/presentation/cubit/add_card/add_card_cubit.dart';
+import 'package:flashcards/presentation/cubit/add_card/add_cart_state.dart';
 import 'package:flashcards/presentation/cubit/flashcard/flashcard_cubit.dart';
 import 'package:flashcards/presentation/views/add_new_card/widgets/new_card_widget.dart';
 import 'package:flashcards/presentation/widgets/action_button_widget.dart';
@@ -35,59 +35,55 @@ class _AddNewCardViewState extends State<AddNewCardView> {
   @override
   Widget build(BuildContext context) {
     final Color kBgColor = Colors.grey.withAlpha((0.2 * 255).round());
-    return Scaffold(
-      appBar: AppBar(backgroundColor: kBgColor),
-      body: Container(
-        color: kBgColor,
-        width: double.infinity,
-        height: context.screenHeight,
-        child: Padding(
-          padding: EdgeInsets.all(context.paddingS),
-          child: Column(
-            children: [
-              Expanded(
-                child: ListView(
-                  children: [
-                    NewCardWidget(
-                      wordCtrl: _wordCtrl,
-                      transcrCtrl: _transcrCtrl,
-                      translationCtrl: _translationCtrl,
-                      descriptionCtrl: _descriptionCtrl,
-                      exampleCtrl: _exampleCtrl,
-                    ),
-                    SizedBox(height: context.paddingS),
-                    Row(
-                      children: [
-                        SizedBox(width: context.paddingXS),
-                        ActionButtonWidget(icon: Icons.add, onTap: () {}),
-                        const Spacer(),
-                        ActionButtonWidget(
-                          icon: Icons.done,
-                          color: AppColors.yes2,
-                          onTap: () {
-                            context.read<FlashcardCubit>().addFlashcard(
-                              Flashcard(
-                                id:
-                                    DateTime.now().millisecondsSinceEpoch
-                                        .toString(),
-                                title: _wordCtrl.text.trim(),
-                                transcription: _transcrCtrl.text.trim(),
-                                translation: _translationCtrl.text.trim(),
-                                description: _descriptionCtrl.text.trim(),
-                                example: _exampleCtrl.text.trim(),
-                                category: CardCategory.newWords,
-                              ),
-                            );
-                            Navigator.of(context).pop();
-                          },
-                        ),
-                        SizedBox(width: context.paddingXS),
-                      ],
-                    ),
-                  ],
+    return BlocProvider(
+      create: (ctx) => AddCardCubit(ctx.read(), ctx.read<FlashcardCubit>()),
+      child: BlocListener<AddCardCubit, AddCardState>(
+        listenWhen:
+            (prev, curr) => prev is! AddCardInitial && curr is AddCardInitial,
+        listener: (_, __) => Navigator.of(context).pop(),
+        child: Scaffold(
+          appBar: AppBar(backgroundColor: kBgColor),
+          body: Container(
+            color: kBgColor,
+            width: double.infinity,
+            height: context.screenHeight,
+            padding: EdgeInsets.all(context.paddingS),
+            child: Column(
+              children: [
+                Expanded(
+                  child: ListView(
+                    children: [
+                      NewCardWidget(
+                        wordCtrl: _wordCtrl,
+                        transcrCtrl: _transcrCtrl,
+                        translationCtrl: _translationCtrl,
+                        descriptionCtrl: _descriptionCtrl,
+                        exampleCtrl: _exampleCtrl,
+                      ),
+                      SizedBox(height: context.paddingS),
+                      Row(
+                        children: [
+                          SizedBox(width: context.paddingXS),
+                          ActionButtonWidget(icon: Icons.add, onTap: () {}),
+                          const Spacer(),
+                          BlocBuilder<AddCardCubit, AddCardState>(
+                            builder: (context, state) {
+                              return ActionButtonWidget(
+                                icon: Icons.done,
+                                color: AppColors.yes2,
+                                onTap:
+                                    () => context.read<AddCardCubit>().save(),
+                              );
+                            },
+                          ),
+                          SizedBox(width: context.paddingXS),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
