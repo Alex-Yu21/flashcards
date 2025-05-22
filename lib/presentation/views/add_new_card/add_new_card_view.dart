@@ -9,33 +9,13 @@ import 'package:flashcards/presentation/widgets/action_button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class AddNewCardView extends StatefulWidget {
+class AddNewCardView extends StatelessWidget {
   const AddNewCardView({super.key});
-
-  @override
-  State<AddNewCardView> createState() => _AddNewCardViewState();
-}
-
-class _AddNewCardViewState extends State<AddNewCardView> {
-  final _wordCtrl = TextEditingController();
-  final _transcrCtrl = TextEditingController();
-  final _translationCtrl = TextEditingController();
-  final _descriptionCtrl = TextEditingController();
-  final _exampleCtrl = TextEditingController();
-
-  @override
-  void dispose() {
-    _wordCtrl.dispose();
-    _transcrCtrl.dispose();
-    _translationCtrl.dispose();
-    _descriptionCtrl.dispose();
-    _exampleCtrl.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
     final Color kBgColor = Colors.grey.withAlpha((0.2 * 255).round());
+
     return BlocProvider(
       create:
           (ctx) => AddCardCubit(
@@ -53,41 +33,46 @@ class _AddNewCardViewState extends State<AddNewCardView> {
             width: double.infinity,
             height: context.screenHeight,
             padding: EdgeInsets.all(context.paddingS),
-            child: Column(
-              children: [
-                Expanded(
-                  child: ListView(
-                    children: [
-                      NewCardWidget(
-                        wordCtrl: _wordCtrl,
-                        transcrCtrl: _transcrCtrl,
-                        translationCtrl: _translationCtrl,
-                        descriptionCtrl: _descriptionCtrl,
-                        exampleCtrl: _exampleCtrl,
+            child: BlocBuilder<AddCardCubit, AddCardState>(
+              builder: (context, state) {
+                final forms =
+                    state is AddCardsEditing
+                        ? state.forms
+                        : [AddCardEditing.empty('')];
+
+                return Column(
+                  children: [
+                    Expanded(
+                      child: ListView.builder(
+                        itemCount: forms.length,
+                        itemBuilder:
+                            (_, i) => NewCardWidget(
+                              key: ValueKey(forms[i].id),
+                              data: forms[i],
+                              index: i,
+                            ),
                       ),
-                      SizedBox(height: context.paddingS),
-                      Row(
-                        children: [
-                          SizedBox(width: context.paddingXS),
-                          ActionButtonWidget(icon: Icons.add, onTap: () {}),
-                          const Spacer(),
-                          BlocBuilder<AddCardCubit, AddCardState>(
-                            builder: (context, state) {
-                              return ActionButtonWidget(
-                                icon: Icons.done,
-                                color: AppColors.yes2,
-                                onTap:
-                                    () => context.read<AddCardCubit>().save(),
-                              );
-                            },
-                          ),
-                          SizedBox(width: context.paddingXS),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ],
+                    ),
+                    SizedBox(height: context.paddingS),
+                    Row(
+                      children: [
+                        SizedBox(width: context.paddingXS),
+                        ActionButtonWidget(
+                          icon: Icons.add,
+                          onTap: () => context.read<AddCardCubit>().addForm(),
+                        ),
+                        const Spacer(),
+                        ActionButtonWidget(
+                          icon: Icons.done,
+                          color: AppColors.yes2,
+                          onTap: () => context.read<AddCardCubit>().save(),
+                        ),
+                        SizedBox(width: context.paddingXS),
+                      ],
+                    ),
+                  ],
+                );
+              },
             ),
           ),
         ),

@@ -7,18 +7,18 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class Field extends StatelessWidget {
   const Field({
     super.key,
-    required this.controller,
+    required this.initial,
     required this.label,
     required this.fieldId,
+    required this.index,
     this.maxLines = 1,
-    this.initialText,
   });
 
-  final TextEditingController controller;
+  final String initial;
   final String label;
   final FieldId fieldId;
+  final int index;
   final int maxLines;
-  final String? initialText;
 
   @override
   Widget build(BuildContext context) {
@@ -26,20 +26,27 @@ class Field extends StatelessWidget {
     final cS = Theme.of(context).colorScheme;
 
     return BlocBuilder<AddCardCubit, AddCardState>(
-      buildWhen: (_, n) => n is AddCardEditing,
+      buildWhen: (_, n) => n is AddCardsEditing,
       builder: (context, state) {
         String? err;
-        if (state is AddCardEditing && state.showErrors) {
-          err = state.errors[fieldId];
+        if (state is AddCardsEditing &&
+            state.forms.length > index &&
+            state.forms[index].showErrors) {
+          err = state.forms[index].errors[fieldId];
         }
+
         return Padding(
           padding: EdgeInsets.only(bottom: context.paddingXS),
           child: TextFormField(
-            controller: controller,
+            initialValue: initial,
             maxLines: maxLines,
             style: bodyStyle,
             onChanged:
-                (v) => context.read<AddCardCubit>().onChanged(fieldId, v),
+                (v) => context.read<AddCardCubit>().onChanged(
+                  fieldId,
+                  v,
+                  index: index,
+                ),
             decoration: InputDecoration(
               labelText: label,
               errorText: err,

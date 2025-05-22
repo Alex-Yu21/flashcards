@@ -10,6 +10,7 @@ class AddCardInitial extends AddCardState {
 
 class AddCardEditing extends AddCardState {
   const AddCardEditing({
+    required this.id,
     required this.word,
     required this.transcription,
     required this.translation,
@@ -20,18 +21,19 @@ class AddCardEditing extends AddCardState {
     required this.showErrors,
   });
 
-  const AddCardEditing.empty()
-    : this(
-        word: '',
-        transcription: '',
-        translation: '',
-        description: '',
-        example: '',
-        errors: const {},
-        canSubmit: false,
-        showErrors: false,
-      );
+  factory AddCardEditing.empty(String id) => AddCardEditing(
+    id: id,
+    word: '',
+    transcription: '',
+    translation: '',
+    description: '',
+    example: '',
+    errors: const {},
+    canSubmit: false,
+    showErrors: false,
+  );
 
+  final String id;
   final String word;
   final String transcription;
   final String translation;
@@ -62,6 +64,7 @@ class AddCardEditing extends AddCardState {
       copyWith(errors: errs, canSubmit: errs.values.every((e) => e == null));
 
   AddCardEditing copyWith({
+    String? id,
     String? word,
     String? transcription,
     String? translation,
@@ -71,6 +74,7 @@ class AddCardEditing extends AddCardState {
     bool? canSubmit,
     bool? showErrors,
   }) => AddCardEditing(
+    id: id ?? this.id,
     word: word ?? this.word,
     transcription: transcription ?? this.transcription,
     translation: translation ?? this.translation,
@@ -80,4 +84,12 @@ class AddCardEditing extends AddCardState {
     canSubmit: canSubmit ?? this.canSubmit,
     showErrors: showErrors ?? this.showErrors,
   );
+}
+
+class AddCardsEditing extends AddCardState {
+  const AddCardsEditing(this.forms);
+
+  final List<AddCardEditing> forms;
+
+  AddCardsEditing copyWith(List<AddCardEditing> v) => AddCardsEditing(v);
 }

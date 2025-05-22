@@ -1,23 +1,15 @@
 import 'package:flashcards/core/extensions/context_extensions.dart';
+import 'package:flashcards/presentation/cubit/add_card/add_card_cubit.dart';
 import 'package:flashcards/presentation/cubit/add_card/add_cart_state.dart';
 import 'package:flashcards/presentation/views/add_new_card/widgets/text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class NewCardWidget extends StatelessWidget {
-  const NewCardWidget({
-    super.key,
-    required this.wordCtrl,
-    required this.transcrCtrl,
-    required this.translationCtrl,
-    required this.descriptionCtrl,
-    required this.exampleCtrl,
-  });
+  const NewCardWidget({super.key, required this.data, required this.index});
 
-  final TextEditingController wordCtrl;
-  final TextEditingController transcrCtrl;
-  final TextEditingController translationCtrl;
-  final TextEditingController descriptionCtrl;
-  final TextEditingController exampleCtrl;
+  final AddCardEditing data;
+  final int index;
 
   @override
   Widget build(BuildContext context) {
@@ -37,35 +29,46 @@ class NewCardWidget extends StatelessWidget {
                     right: 0,
                     top: 0,
                     child: IconButton(
-                      onPressed: () {},
+                      onPressed:
+                          () =>
+                              context.read<AddCardCubit>().removeForm(data.id),
                       icon: const Icon(Icons.close),
                     ),
                   ),
                 ],
               ),
             ),
-            Field(controller: wordCtrl, label: 'word*', fieldId: FieldId.word),
             Field(
-              controller: transcrCtrl,
-              label: 'transcription',
-              fieldId: FieldId.transcription,
+              initial: data.word,
+              label: 'word*',
+              fieldId: FieldId.word,
+              index: index,
             ),
             Field(
-              controller: descriptionCtrl,
+              initial: data.transcription,
+              label: 'transcription',
+              fieldId: FieldId.transcription,
+              index: index,
+            ),
+            Field(
+              initial: data.description,
               label: 'description',
               fieldId: FieldId.description,
+              index: index,
             ),
             Text('BACK SIDE', style: context.bodyStyle),
             Field(
-              controller: translationCtrl,
+              initial: data.translation,
               label: 'translation*',
               fieldId: FieldId.translation,
+              index: index,
             ),
             Field(
-              controller: exampleCtrl,
+              initial: data.example,
               label: 'example sentence',
               maxLines: 2,
               fieldId: FieldId.example,
+              index: index,
             ),
           ],
         ),
