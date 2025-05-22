@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flashcards/core/extensions/context_extensions.dart';
 import 'package:flashcards/data/dummy_data.dart';
+import 'package:flashcards/domain/entities/flashcard.dart';
 import 'package:flashcards/presentation/widgets/flashcard_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
@@ -11,13 +12,19 @@ class StartLearningCardSwiperWidget extends StatelessWidget {
     super.key,
     required this.w,
     required this.onTap,
+    required this.cards,
   });
 
   final double w;
   final VoidCallback onTap;
+  final List<Flashcard> cards;
 
   @override
   Widget build(BuildContext context) {
+    if (cards.isEmpty) {
+      // TODO if (cards.isEmpty)
+    }
+
     return Stack(
       children: [
         ImageFiltered(
@@ -67,3 +74,4 @@ class StartLearningCardSwiperWidget extends StatelessWidget {
     );
   }
 }
+// FIXME last card did not registers? line is not complite

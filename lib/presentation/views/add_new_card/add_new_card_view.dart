@@ -1,5 +1,6 @@
 import 'package:flashcards/core/extensions/context_extensions.dart';
 import 'package:flashcards/core/theme/app_colors.dart';
+import 'package:flashcards/domain/repositories/flashcard_repository.dart';
 import 'package:flashcards/presentation/cubit/add_card/add_card_cubit.dart';
 import 'package:flashcards/presentation/cubit/add_card/add_cart_state.dart';
 import 'package:flashcards/presentation/cubit/flashcard/flashcard_cubit.dart';
@@ -36,7 +37,11 @@ class _AddNewCardViewState extends State<AddNewCardView> {
   Widget build(BuildContext context) {
     final Color kBgColor = Colors.grey.withAlpha((0.2 * 255).round());
     return BlocProvider(
-      create: (ctx) => AddCardCubit(ctx.read(), ctx.read<FlashcardCubit>()),
+      create:
+          (ctx) => AddCardCubit(
+            ctx.read<FlashcardRepository>(),
+            ctx.read<FlashcardCubit>(),
+          ),
       child: BlocListener<AddCardCubit, AddCardState>(
         listenWhen:
             (prev, curr) => prev is! AddCardInitial && curr is AddCardInitial,

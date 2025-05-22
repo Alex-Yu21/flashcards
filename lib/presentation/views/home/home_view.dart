@@ -1,6 +1,8 @@
 import 'package:flashcards/core/extensions/context_extensions.dart';
 import 'package:flashcards/domain/entities/card_category.dart';
-import 'package:flashcards/domain/repositories/flashcard_repository.dart';
+import 'package:flashcards/domain/entities/flashcard.dart';
+import 'package:flashcards/presentation/cubit/flashcard/flashcard_cubit.dart';
+import 'package:flashcards/presentation/cubit/flashcard/flashcard_state.dart';
 import 'package:flashcards/presentation/cubit/statistics/statistics_cubit.dart';
 import 'package:flashcards/presentation/cubit/statistics/statistics_state.dart';
 import 'package:flashcards/presentation/cubit/status_overview_cubit.dart';
@@ -23,7 +25,9 @@ class HomeView extends StatelessWidget {
     final pS = context.paddingS;
     final pM = context.paddingM;
     final pL = context.paddingL;
-    final url = '';
+    const url = '';
+
+    // TODO url
 
     return Scaffold(
       backgroundColor: cs.surface,
@@ -52,6 +56,7 @@ class HomeView extends StatelessWidget {
             Flexible(
               flex: 64,
               child: _bottomSheet(
+                context: context,
                 h: h,
                 w: w,
                 pS: pS,
@@ -70,7 +75,7 @@ class HomeView extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Todays\ndashboard', style: context.headerStyle),
+        Text('Today’s\ndashboard', style: context.headerStyle),
         CircleAvatar(
           radius: h * 0.028,
           backgroundImage:
@@ -82,12 +87,17 @@ class HomeView extends StatelessWidget {
   }
 
   Widget _bottomSheet({
+    required BuildContext context,
     required double h,
     required double w,
     required double pS,
     required double pM,
     required VoidCallback learningTap,
   }) {
+    final state = context.read<FlashcardCubit>().state;
+    final List<Flashcard> cards =
+        state is FlashcardsLoaded ? state.flashcards : const <Flashcard>[];
+
     return Container(
       decoration: BoxDecoration(
         color: Colors.grey.withAlpha((0.2 * 255).round()),
@@ -113,13 +123,16 @@ class HomeView extends StatelessWidget {
               child: const StatusOverviewWidget(),
             ),
           ),
-
           Padding(
             padding: EdgeInsets.only(right: pM),
             child: SizedBox(
               height: h * 0.30,
               width: w * 0.90,
-              child: StartLearningCardSwiperWidget(w: w, onTap: learningTap),
+              child: StartLearningCardSwiperWidget(
+                w: w,
+                onTap: learningTap,
+                cards: cards,
+              ),
             ),
           ),
         ],
@@ -130,14 +143,7 @@ class HomeView extends StatelessWidget {
   Future<void> _openLearningScreen(BuildContext context) async {
     final statsCubit = context.read<StatisticsCubit>();
 
-    await Navigator.of(context).push(
-      _bottomUpRoute(
-        RepositoryProvider.value(
-          value: context.read<FlashcardRepository>(),
-          child: const LearningView(),
-        ),
-      ),
-    );
+    await Navigator.of(context).push(_bottomUpRoute(const LearningView()));
     statsCubit.refresh();
   }
 
