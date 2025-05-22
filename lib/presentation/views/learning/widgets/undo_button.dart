@@ -51,7 +51,7 @@ class UndoButton extends StatelessWidget {
                     icon: Icons.undo,
                     onTap: onUndo,
                   )
-                  : const SizedBox(key: ValueKey('empty'), width: 0, height: 0),
+                  : const SizedBox.shrink(),
         ),
       ),
     );

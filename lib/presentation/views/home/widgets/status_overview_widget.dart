@@ -112,3 +112,5 @@ class _StatItem extends StatelessWidget {
     );
   }
 }
+
+// TODO BlocSelector or context.select for _StatItem

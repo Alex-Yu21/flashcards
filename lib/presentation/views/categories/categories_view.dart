@@ -104,3 +104,5 @@ class CategoriesView extends StatelessWidget {
     );
   }
 }
+
+// FIXME unblock aanimation starts before screen is open again

@@ -16,6 +16,7 @@ void main() {
           home: Scaffold(
             body: Center(
               child: StartLearningCardSwiperWidget(
+                cards: const [],
                 w: 800,
                 onTap: () => tapped = true,
               ),

@@ -61,3 +61,5 @@ class FlashcardSwiper extends StatelessWidget {
     );
   }
 }
+
+// TODO RepaintBoundary around every card

@@ -40,3 +40,6 @@ class ProgressLineWidget extends StatelessWidget {
     );
   }
 }
+
+// FIXME all cards in line
+// TODO end window
