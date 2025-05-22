@@ -9,8 +9,30 @@ import 'package:flashcards/presentation/widgets/action_button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class CategoriesView extends StatelessWidget {
+class CategoriesView extends StatefulWidget {
   const CategoriesView({super.key});
+
+  @override
+  State<CategoriesView> createState() => _CategoriesViewState();
+}
+
+class _CategoriesViewState extends State<CategoriesView>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _ctrl;
+
+  @override
+  void initState() {
+    super.initState();
+    _ctrl = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 600),
+    );
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final unlocked = context.read<CategoryUnlockCubit>().state.isUnlocked;
+      if (unlocked) _ctrl.forward();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -104,5 +126,3 @@ class CategoriesView extends StatelessWidget {
     );
   }
 }
-
-// FIXME unblock aanimation starts before screen is open again
