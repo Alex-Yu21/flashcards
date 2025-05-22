@@ -10,6 +10,7 @@ import 'package:flashcards/presentation/views/home/widgets/progress_bar_widget.d
 import 'package:flashcards/presentation/views/home/widgets/start_learning_card_swiper_widget.dart';
 import 'package:flashcards/presentation/views/home/widgets/status_overview_widget.dart';
 import 'package:flashcards/presentation/views/learning/learning_view.dart';
+import 'package:flashcards/presentation/widgets/bottom_up_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -143,22 +144,7 @@ class HomeView extends StatelessWidget {
   Future<void> _openLearningScreen(BuildContext context) async {
     final statsCubit = context.read<StatisticsCubit>();
 
-    await Navigator.of(context).push(_bottomUpRoute(const LearningView()));
+    await Navigator.of(context).push(bottomUpRoute(const LearningView()));
     statsCubit.refresh();
-  }
-
-  PageRouteBuilder<bool> _bottomUpRoute(Widget page) {
-    return PageRouteBuilder<bool>(
-      transitionDuration: const Duration(milliseconds: 350),
-      reverseTransitionDuration: const Duration(milliseconds: 300),
-      pageBuilder: (_, __, ___) => page,
-      transitionsBuilder: (_, animation, __, child) {
-        final tween = Tween(
-          begin: const Offset(0, 1),
-          end: Offset.zero,
-        ).chain(CurveTween(curve: Curves.easeOutCubic));
-        return SlideTransition(position: animation.drive(tween), child: child);
-      },
-    );
   }
 }
