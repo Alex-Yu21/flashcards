@@ -1,4 +1,4 @@
-import 'package:flashcards/domain/entities/flashcard.dart';
+import 'package:flashcards/domain/entities/flashcard_entity.dart';
 import 'package:flashcards/presentation/widgets/flashcard_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
@@ -19,7 +19,7 @@ class FlashcardSwiper extends StatelessWidget {
 
   final double height;
   final double width;
-  final List<Flashcard> flashcards;
+  final List<FlashcardEntity> flashcards;
   final CardSwiperController swiperCtrl;
   final List<FlipCardController> flipCtrls;
   final bool Function(int, int?, CardSwiperDirection) onSwipe;

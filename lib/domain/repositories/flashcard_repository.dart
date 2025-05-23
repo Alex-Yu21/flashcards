@@ -1,6 +1,6 @@
-import 'package:flashcards/domain/entities/flashcard.dart';
+import 'package:flashcards/domain/entities/flashcard_entity.dart';
 
 abstract class FlashcardRepository {
-  Future<List<Flashcard>> fetchAllFlashcards();
-  Future<void> saveFlashcard(Flashcard card);
+  Future<List<FlashcardEntity>> fetchAllFlashcards();
+  Future<void> saveFlashcard(FlashcardEntity card);
 }

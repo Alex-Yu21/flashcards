@@ -1,5 +1,5 @@
 import 'package:flashcards/domain/entities/card_category.dart';
-import 'package:flashcards/domain/entities/flashcard.dart';
+import 'package:flashcards/domain/entities/flashcard_entity.dart';
 import 'package:flashcards/domain/repositories/flashcard_repository.dart';
 import 'package:flashcards/presentation/cubit/statistics/statistics_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -24,7 +24,7 @@ class StatisticsCubit extends Cubit<StatisticsState> {
     );
   }
 
-  Map<CardCategory, int> _countByCategory(List<Flashcard> cards) =>
+  Map<CardCategory, int> _countByCategory(List<FlashcardEntity> cards) =>
       cards.fold(<CardCategory, int>{}, (m, c) {
         m[c.category] = (m[c.category] ?? 0) + 1;
         return m;

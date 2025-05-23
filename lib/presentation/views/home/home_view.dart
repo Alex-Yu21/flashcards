@@ -1,6 +1,6 @@
 import 'package:flashcards/core/extensions/context_extensions.dart';
 import 'package:flashcards/domain/entities/card_category.dart';
-import 'package:flashcards/domain/entities/flashcard.dart';
+import 'package:flashcards/domain/entities/flashcard_entity.dart';
 import 'package:flashcards/presentation/cubit/flashcard/flashcard_cubit.dart';
 import 'package:flashcards/presentation/cubit/flashcard/flashcard_state.dart';
 import 'package:flashcards/presentation/cubit/statistics/statistics_cubit.dart';
@@ -96,8 +96,10 @@ class HomeView extends StatelessWidget {
     required VoidCallback learningTap,
   }) {
     final state = context.read<FlashcardCubit>().state;
-    final List<Flashcard> cards =
-        state is FlashcardsLoaded ? state.flashcards : const <Flashcard>[];
+    final List<FlashcardEntity> cards =
+        state is FlashcardsLoaded
+            ? state.flashcards
+            : const <FlashcardEntity>[];
 
     return Container(
       decoration: BoxDecoration(

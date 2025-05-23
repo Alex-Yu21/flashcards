@@ -1,5 +1,5 @@
 import 'package:flashcards/domain/entities/card_category.dart';
-import 'package:flashcards/domain/entities/flashcard.dart';
+import 'package:flashcards/domain/entities/flashcard_entity.dart';
 import 'package:flashcards/domain/repositories/flashcard_repository.dart';
 import 'package:flashcards/presentation/cubit/add_card/add_cart_state.dart';
 import 'package:flashcards/presentation/cubit/flashcard/flashcard_cubit.dart';
@@ -71,14 +71,13 @@ class AddCardCubit extends Cubit<AddCardState> {
     }
 
     for (final e in currentForms) {
-      final card = Flashcard(
+      final card = FlashcardEntity(
         id: _uuid.v4(),
         title: e.word.trim(),
         transcription: e.transcription.trim(),
         translation: e.translation.trim(),
         description: e.description.trim(),
         example: e.example.trim(),
-        audioPath: null,
         category: CardCategory.newWords,
       );
       await _repo.saveFlashcard(card);

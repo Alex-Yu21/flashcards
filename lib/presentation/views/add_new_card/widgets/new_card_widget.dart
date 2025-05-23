@@ -43,7 +43,9 @@ class NewCardWidget extends StatelessWidget {
               label: 'word*',
               fieldId: FieldId.word,
               index: index,
+              prefixIcon: const Icon(Icons.search),
             ),
+            // TODO progress line
             Field(
               initial: data.transcription,
               label: 'transcription',

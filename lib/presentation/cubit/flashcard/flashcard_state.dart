@@ -1,11 +1,11 @@
-import 'package:flashcards/domain/entities/flashcard.dart';
+import 'package:flashcards/domain/entities/flashcard_entity.dart';
 
 abstract class FlashcardState {}
 
 class FlashcardInitial extends FlashcardState {}
 
 class FlashcardsLoaded extends FlashcardState {
-  final List<Flashcard> flashcards;
+  final List<FlashcardEntity> flashcards;
 
   FlashcardsLoaded(this.flashcards);
 }

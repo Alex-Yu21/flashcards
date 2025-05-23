@@ -1,5 +1,5 @@
 import 'package:flashcards/core/extensions/context_extensions.dart';
-import 'package:flashcards/domain/entities/flashcard.dart';
+import 'package:flashcards/domain/entities/flashcard_entity.dart';
 import 'package:flashcards/presentation/cubit/flashcard/flashcard_cubit.dart';
 import 'package:flashcards/presentation/cubit/flashcard/flashcard_state.dart';
 import 'package:flashcards/presentation/views/learning/widgets/answer_buttons.dart';
@@ -42,7 +42,7 @@ class _LearningViewState extends State<LearningView> {
     setState(() => _currentIndex--);
   }
 
-  void _processAnswer(Flashcard card, CardSwiperDirection dir) {
+  void _processAnswer(FlashcardEntity card, CardSwiperDirection dir) {
     final cubit = context.read<FlashcardCubit>();
 
     if (dir == CardSwiperDirection.left) {

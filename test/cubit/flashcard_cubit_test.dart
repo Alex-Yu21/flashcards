@@ -1,20 +1,20 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flashcards/domain/entities/card_category.dart';
-import 'package:flashcards/domain/entities/flashcard.dart';
+import 'package:flashcards/domain/entities/flashcard_entity.dart';
 import 'package:flashcards/domain/repositories/flashcard_repository.dart';
 import 'package:flashcards/presentation/cubit/flashcard/flashcard_cubit.dart';
 import 'package:flashcards/presentation/cubit/flashcard/flashcard_state.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 class _MemoryRepo implements FlashcardRepository {
-  final List<Flashcard> _store;
+  final List<FlashcardEntity> _store;
   _MemoryRepo(this._store);
 
   @override
-  Future<List<Flashcard>> fetchAllFlashcards() async => _store;
+  Future<List<FlashcardEntity>> fetchAllFlashcards() async => _store;
 
   @override
-  Future<void> saveFlashcard(Flashcard card) async {
+  Future<void> saveFlashcard(FlashcardEntity card) async {
     final i = _store.indexWhere((c) => c.id == card.id);
     if (i != -1) _store[i] = card;
   }
@@ -26,13 +26,11 @@ void main() {
       'leave DefaultCat as DefaultCat',
       build: () {
         final repo = _MemoryRepo([
-          Flashcard(
+          FlashcardEntity(
             id: '1',
             title: 'ciao',
             translation: 'привет',
             description: 'italian hello',
-            transcription: '',
-            example: '',
             category: CardCategory.defaultCat,
           ),
         ]);
@@ -58,13 +56,11 @@ void main() {
       'promoteCard: NewWords ➜ Learning',
       build: () {
         final repo = _MemoryRepo([
-          Flashcard(
+          FlashcardEntity(
             id: '2',
             title: 'apple',
             translation: 'яблоко',
             description: 'fruit',
-            transcription: '',
-            example: '',
             category: CardCategory.newWords,
           ),
         ]);

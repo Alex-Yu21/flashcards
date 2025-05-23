@@ -1,23 +1,23 @@
 import 'package:flashcards/domain/entities/card_category.dart';
 
-class Flashcard {
-  Flashcard({
+class FlashcardEntity {
+  FlashcardEntity({
     required this.id,
     required this.title,
-    required this.transcription,
-    this.audioPath,
-    required this.example,
     required this.translation,
-    required this.description,
+    this.transcription,
+    this.audioPath,
+    this.example,
+    this.description,
     this.category = CardCategory.newWords,
   });
 
   final String id;
   final String title;
-  final String transcription;
-  final String? audioPath;
-  final String description;
   final String translation;
-  final String example;
+  final String? transcription;
+  final String? audioPath;
+  final String? description;
+  final String? example;
   CardCategory category;
 }

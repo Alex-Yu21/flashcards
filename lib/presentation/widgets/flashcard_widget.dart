@@ -1,5 +1,5 @@
 import 'package:flashcards/core/extensions/context_extensions.dart';
-import 'package:flashcards/domain/entities/flashcard.dart';
+import 'package:flashcards/domain/entities/flashcard_entity.dart';
 import 'package:flutter/material.dart';
 
 class FlashcardWidget extends StatelessWidget {
@@ -11,7 +11,7 @@ class FlashcardWidget extends StatelessWidget {
     this.textColor,
   });
 
-  final Flashcard flashcard;
+  final FlashcardEntity flashcard;
   final bool isTurned;
   final Color? color;
   final Color? textColor;
@@ -55,7 +55,7 @@ class FlashcardWidget extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              flashcard.transcription.toLowerCase(),
+              flashcard.transcription?.toLowerCase() ?? '',
               style: context.captionStyle.copyWith(color: txColor),
             ),
             IconButton(
@@ -67,7 +67,7 @@ class FlashcardWidget extends StatelessWidget {
         ),
         const SizedBox(height: 12),
         Text(
-          flashcard.description.toLowerCase(),
+          flashcard.description?.toLowerCase() ?? '',
           style: context.bodyStyle.copyWith(color: txColor),
         ),
       ],
@@ -93,7 +93,7 @@ class FlashcardWidget extends StatelessWidget {
         ),
         const SizedBox(height: 12),
         Text(
-          flashcard.example.toLowerCase(),
+          flashcard.example?.toLowerCase() ?? '',
           style: context.bodyStyle.copyWith(color: txColor),
         ),
         const Spacer(),

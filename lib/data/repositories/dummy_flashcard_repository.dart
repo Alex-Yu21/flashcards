@@ -1,15 +1,15 @@
-import 'package:flashcards/domain/entities/flashcard.dart';
+import 'package:flashcards/domain/entities/flashcard_entity.dart';
 import 'package:flashcards/domain/repositories/flashcard_repository.dart';
 
 class DummyFlashcardRepository implements FlashcardRepository {
-  final List<Flashcard> _data;
+  final List<FlashcardEntity> _data;
   DummyFlashcardRepository(this._data);
 
   @override
-  Future<List<Flashcard>> fetchAllFlashcards() async => _data;
+  Future<List<FlashcardEntity>> fetchAllFlashcards() async => _data;
 
   @override
-  Future<void> saveFlashcard(Flashcard card) async {
+  Future<void> saveFlashcard(FlashcardEntity card) async {
     final i = _data.indexWhere((c) => c.id == card.id);
     if (i != -1) _data[i] = card;
   }

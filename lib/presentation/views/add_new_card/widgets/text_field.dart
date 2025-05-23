@@ -12,6 +12,7 @@ class Field extends StatelessWidget {
     required this.fieldId,
     required this.index,
     this.maxLines = 1,
+    this.prefixIcon,
   });
 
   final String initial;
@@ -19,6 +20,7 @@ class Field extends StatelessWidget {
   final FieldId fieldId;
   final int index;
   final int maxLines;
+  final Icon? prefixIcon;
 
   @override
   Widget build(BuildContext context) {
@@ -48,6 +50,7 @@ class Field extends StatelessWidget {
                   index: index,
                 ),
             decoration: InputDecoration(
+              prefixIcon: prefixIcon,
               labelText: label,
               errorText: err,
               labelStyle: bodyStyle,

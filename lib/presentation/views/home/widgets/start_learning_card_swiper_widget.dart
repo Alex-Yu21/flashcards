@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:flashcards/core/extensions/context_extensions.dart';
 import 'package:flashcards/data/dummy_data.dart';
-import 'package:flashcards/domain/entities/flashcard.dart';
+import 'package:flashcards/domain/entities/flashcard_entity.dart';
 import 'package:flashcards/presentation/widgets/flashcard_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
@@ -17,7 +17,7 @@ class StartLearningCardSwiperWidget extends StatelessWidget {
 
   final double w;
   final VoidCallback onTap;
-  final List<Flashcard> cards;
+  final List<FlashcardEntity> cards;
 
   @override
   Widget build(BuildContext context) {
