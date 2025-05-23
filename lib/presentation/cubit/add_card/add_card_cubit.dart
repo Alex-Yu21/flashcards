@@ -108,3 +108,18 @@ class AddCardCubit extends Cubit<AddCardState> {
 
   String? _req(String v) => v.trim().isEmpty ? 'empty field' : null;
 }
+
+extension Prefill on AddCardCubit {
+  void applySuggestion(int index, FlashcardEntity e) {
+    final prev = _forms;
+    final filled = prev[index].copyWith(
+      word: e.title,
+      transcription: e.transcription ?? '',
+      translation: e.translation,
+      description: e.description ?? '',
+      example: e.example ?? '',
+      audioPath: e.audioPath ?? '',
+    );
+    emit(AddCardsEditing([...prev]..[index] = filled));
+  }
+}
