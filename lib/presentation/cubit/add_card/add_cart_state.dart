@@ -16,6 +16,7 @@ class AddCardEditing extends AddCardState {
     required this.translation,
     required this.description,
     required this.example,
+    required this.audioPath,
     required this.errors,
     required this.canSubmit,
     required this.showErrors,
@@ -28,6 +29,7 @@ class AddCardEditing extends AddCardState {
     translation: '',
     description: '',
     example: '',
+    audioPath: '',
     errors: const {},
     canSubmit: false,
     showErrors: false,
@@ -39,10 +41,34 @@ class AddCardEditing extends AddCardState {
   final String translation;
   final String description;
   final String example;
+  final String audioPath;
   final Map<FieldId, String?> errors;
   final bool canSubmit;
   final bool showErrors;
 
+  AddCardEditing copyWith({
+    String? id,
+    String? word,
+    String? transcription,
+    String? translation,
+    String? description,
+    String? example,
+    String? audioPath,
+    Map<FieldId, String?>? errors,
+    bool? canSubmit,
+    bool? showErrors,
+  }) => AddCardEditing(
+    id: id ?? this.id,
+    word: word ?? this.word,
+    transcription: transcription ?? this.transcription,
+    translation: translation ?? this.translation,
+    description: description ?? this.description,
+    example: example ?? this.example,
+    audioPath: audioPath ?? this.audioPath,
+    errors: errors ?? this.errors,
+    canSubmit: canSubmit ?? this.canSubmit,
+    showErrors: showErrors ?? this.showErrors,
+  );
   AddCardEditing copyWithField(FieldId id, String v) {
     switch (id) {
       case FieldId.word:
@@ -55,35 +81,12 @@ class AddCardEditing extends AddCardState {
         return copyWith(description: v);
       case FieldId.example:
         return copyWith(example: v);
-      default:
-        throw UnsupportedError('Unknown field $id');
     }
+    throw UnsupportedError('Unknown field $id');
   }
 
   AddCardEditing withValidation(Map<FieldId, String?> errs) =>
       copyWith(errors: errs, canSubmit: errs.values.every((e) => e == null));
-
-  AddCardEditing copyWith({
-    String? id,
-    String? word,
-    String? transcription,
-    String? translation,
-    String? description,
-    String? example,
-    Map<FieldId, String?>? errors,
-    bool? canSubmit,
-    bool? showErrors,
-  }) => AddCardEditing(
-    id: id ?? this.id,
-    word: word ?? this.word,
-    transcription: transcription ?? this.transcription,
-    translation: translation ?? this.translation,
-    description: description ?? this.description,
-    example: example ?? this.example,
-    errors: errors ?? this.errors,
-    canSubmit: canSubmit ?? this.canSubmit,
-    showErrors: showErrors ?? this.showErrors,
-  );
 }
 
 class AddCardsEditing extends AddCardState {
