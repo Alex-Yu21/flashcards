@@ -81,8 +81,10 @@ class AddCardEditing extends AddCardState {
         return copyWith(description: v);
       case FieldId.example:
         return copyWith(example: v);
+      // ignore: unreachable_switch_default
+      default:
+        throw UnsupportedError('Unknown field $id');
     }
-    throw UnsupportedError('Unknown field $id');
   }
 
   AddCardEditing withValidation(Map<FieldId, String?> errs) =>
