@@ -1,7 +1,7 @@
-import 'package:flashcards/domain/entities/flashcard.dart';
+import 'package:flashcards/domain/entities/flashcard_entity.dart';
 
-final List<Flashcard> dummyFlashcards = [
-  Flashcard(
+final List<FlashcardEntity> dummyFlashcards = [
+  FlashcardEntity(
     id: '1',
     title: 'cane',
     transcription: '[ˈka.ne]',
@@ -10,7 +10,7 @@ final List<Flashcard> dummyFlashcards = [
     translation: 'собака',
     example: 'Il cane corre nel parco.',
   ),
-  Flashcard(
+  FlashcardEntity(
     id: '2',
     title: 'gatto',
     transcription: '[ˈɡat.to]',
@@ -19,7 +19,7 @@ final List<Flashcard> dummyFlashcards = [
     translation: 'кот',
     example: 'Il gatto dorme sul divano.',
   ),
-  Flashcard(
+  FlashcardEntity(
     id: '3',
     title: 'casa',
     transcription: '[ˈka.sa]',
@@ -28,7 +28,7 @@ final List<Flashcard> dummyFlashcards = [
     translation: 'дом',
     example: 'La mia casa è grande e luminosa.',
   ),
-  Flashcard(
+  FlashcardEntity(
     id: '4',
     title: 'libro',
     transcription: '[ˈli.bro]',
@@ -37,7 +37,7 @@ final List<Flashcard> dummyFlashcards = [
     translation: 'книга',
     example: 'Sto leggendo un libro interessante.',
   ),
-  Flashcard(
+  FlashcardEntity(
     id: '5',
     title: 'amico',
     transcription: '[aˈmi.ko]',
@@ -46,7 +46,7 @@ final List<Flashcard> dummyFlashcards = [
     translation: 'друг',
     example: 'Il mio amico vive a Roma.',
   ),
-  Flashcard(
+  FlashcardEntity(
     id: '6',
     title: 'mela',
     transcription: '[ˈme.la]',
@@ -55,7 +55,7 @@ final List<Flashcard> dummyFlashcards = [
     translation: 'яблоко',
     example: 'Mangio una mela ogni giorno.',
   ),
-  Flashcard(
+  FlashcardEntity(
     id: '7',
     title: 'scuola',
     transcription: '[ˈskwo.la]',
@@ -64,7 +64,7 @@ final List<Flashcard> dummyFlashcards = [
     translation: 'школа',
     example: 'I bambini vanno a scuola ogni mattina.',
   ),
-  Flashcard(
+  FlashcardEntity(
     id: '8',
     title: 'sole',
     transcription: '[ˈso.le]',
@@ -73,7 +73,7 @@ final List<Flashcard> dummyFlashcards = [
     translation: 'солнце',
     example: 'Il sole splende alto nel cielo.',
   ),
-  Flashcard(
+  FlashcardEntity(
     id: '9',
     title: 'acqua',
     transcription: '[ˈak.kwa]',
@@ -82,7 +82,7 @@ final List<Flashcard> dummyFlashcards = [
     translation: 'вода',
     example: 'Bevo molta acqua durante il giorno.',
   ),
-  Flashcard(
+  FlashcardEntity(
     id: '10',
     title: 'tempo',
     transcription: '[ˈtɛm.po]',

@@ -13,6 +13,7 @@ extension CardCategoryPromote on CardCategory {
         return CardCategory.mastered;
       case CardCategory.defaultCat:
         return CardCategory.defaultCat;
+      // ignore: unreachable_switch_default
       default:
         throw UnsupportedError('Unknown CardCategory');
     }
